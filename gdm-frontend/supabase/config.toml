@@ -1,0 +1,10 @@
+project_id = "hlwesjdabpypndhkmfpn"
+
+[functions.chat]
+verify_jwt = false
+
+[functions.analyze-meal]
+verify_jwt = false
+
+[functions.metabolic-insights]
+verify_jwt = false
