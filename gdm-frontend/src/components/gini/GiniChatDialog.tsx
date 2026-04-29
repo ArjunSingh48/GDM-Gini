@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import { toast } from "sonner";
 
 type Message = { role: "user" | "assistant"; content: string };
@@ -39,6 +39,12 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages, isLoading]);
 
   const sendMessage = async (text?: string) => {
     const messageText = text || input.trim();
@@ -50,8 +56,6 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
     setMessages((prev) => [...prev, userMsg]);
     setIsLoading(true);
 
-    let assistantSoFar = "";
-
     try {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -62,54 +66,16 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
         body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
 
+      const data = await resp.json().catch(() => ({}));
+
       if (!resp.ok) {
-        const errorData = await resp.json().catch(() => ({}));
-        throw new Error(errorData.error || "Failed to get response");
+        throw new Error(data?.error || "Failed to get response");
       }
 
-      if (!resp.body) throw new Error("No response stream");
+      const reply = typeof data?.reply === "string" ? data.reply.trim() : "";
+      if (!reply) throw new Error("Empty response from model");
 
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let textBuffer = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        textBuffer += decoder.decode(value, { stream: true });
-
-        let newlineIndex: number;
-        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-          let line = textBuffer.slice(0, newlineIndex);
-          textBuffer = textBuffer.slice(newlineIndex + 1);
-
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (line.startsWith(":") || line.trim() === "") continue;
-          if (!line.startsWith("data: ")) continue;
-
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
-
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-            if (content) {
-              assistantSoFar += content;
-              const current = assistantSoFar;
-              setMessages((prev) => {
-                const last = prev[prev.length - 1];
-                if (last?.role === "assistant" && prev.length > 1) {
-                  return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: current } : m));
-                }
-                return [...prev, { role: "assistant", content: current }];
-              });
-            }
-          } catch {
-            textBuffer = line + "\n" + textBuffer;
-            break;
-          }
-        }
-      }
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err: any) {
       toast.error(err.message || "Something went wrong");
       setMessages((prev) => [
@@ -126,15 +92,15 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md max-h-[80vh] flex flex-col p-0 gap-0 rounded-2xl">
-        <DialogHeader className="p-4 pb-2 border-b border-border">
+      <DialogContent className="sm:max-w-md h-[85vh] max-h-[85vh] flex flex-col p-0 gap-0 rounded-2xl overflow-hidden">
+        <DialogHeader className="p-4 pb-2 border-b border-border shrink-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-display">
             <span className="text-2xl">🐶</span>
             Ask Gini
           </DialogTitle>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 px-4 py-3 min-h-[300px] max-h-[50vh]">
+        <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-4 py-3">
           <div className="flex flex-col gap-3">
             {messages.map((msg, i) => (
               <div
@@ -179,8 +145,9 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
                 </div>
               </div>
             )}
+            <div ref={bottomRef} />
           </div>
-        </ScrollArea>
+        </div>
 
         <div className="p-3 border-t border-border">
           <form
