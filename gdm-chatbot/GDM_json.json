@@ -1,0 +1,344 @@
+{
+  "dataset": [
+    {
+      "question": "What is the definition of Gestational Diabetes Mellitus (GDM) according to the World Health Organization (WHO)?",
+      "answer": "GDM is defined as 'any level of the early or initial diagnosis of glucose intolerance in pregnancy' or hyperglycemia that is diagnosed or develops during pregnancy.",
+      "source_section": "Background, PCOS and GDM document"
+    },
+    {
+      "question": "What are the potential short-term complications for offspring born to women with GDM?",
+      "answer": "Short-term complications for offspring include macrosomia, neonatal hypoglycemia, hyperbilirubinemia, and neonatal respiratory distress syndrome.",
+      "source_section": "Background"
+    },
+    {
+      "question": "What is the long-term risk for women with a history of GDM regarding developing Type 2 Diabetes Mellitus (T2DM)?",
+      "answer": "According to a meta-analysis, women with a history of GDM have a nearly 10-fold higher risk of developing T2DM than those with normoglycemia during pregnancy. Another source states a nearly 20-fold increased lifetime risk and that 50% will develop impaired glucose metabolism within 10 years.",
+      "source_section": "Background, PCOS and GDM document"
+    },
+    {
+      "question": "What is the long-term risk for offspring born to women with GDM concerning obesity and cardiovascular disease?",
+      "answer": "Offspring are at an increased risk of obesity in childhood and cardiovascular disease traits in adulthood.",
+      "source_section": "Background"
+    },
+    {
+      "question": "How did the 'two-child policy' implemented in China in October 2015 affect the prevalence of GDM?",
+      "answer": "The policy led to a dramatic rise in the prevalence of high-risk pregnant women (e.g., advanced age, pre-pregnancy overweight or obesity), which is likely to cause a further increase in GDM prevalence, giving rise to a tremendous burden on the healthcare system.",
+      "source_section": "Background"
+    },
+    {
+      "question": "What is the global prevalence of GDM according to the International Diabetes Federation (IDF) in 2017?",
+      "answer": "GDM occurs in approximately 14% of pregnancies globally, ranging from 9% in Africa, 12.6% in North America, and 21% in Asia.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What was the reported prevalence of GDM in China according to a meta-analysis investigating Eastern and Southeast Asia?",
+      "answer": "The incidence of GDM in China was reported to be 11.91%, which was much higher than Japan, Korea, and Thailand (where prevalence was less than 8.0%).",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "By how much did the prevalence of GDM increase in Tianjin, China, from 1999 to 2012?",
+      "answer": "The prevalence of GDM increased almost 3.5-fold.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What was the landmark study that led to the adoption of new IADPSG diagnostic criteria for GDM?",
+      "answer": "The Hyperglycemia and Adverse Pregnancy Outcome (HAPO) study, which demonstrated a dose-response association between increasing maternal glucose levels and adverse outcomes.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What was the prevalence of GDM in a study of 15,194 pregnant women in 15 hospitals in Beijing, China, according to the new IADPSG criteria?",
+      "answer": "The prevalence was up to 19.7%.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What is the pooled prevalence of GDM in mainland China according to the IADPSG criteria, based on a meta-analysis of 25 studies?",
+      "answer": "The pooled prevalence was 14.8% (95% confidence interval (CI): 12.8–16.7%).",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "Which regions of China have a higher prevalence of GDM, and why?",
+      "answer": "The eastern and southern parts of China have a much higher prevalence, which is likely due to relatively better economic development and associated lifestyle changes. For example, a study in Tongzhou district of Beijing showed an overall prevalence of 24.24%.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What is the GDM prevalence rate in Xinjiang, Northwestern China, and why might it be lower?",
+      "answer": "The prevalence was only 5.12% in Xinjiang according to IADPSG criteria in 2013. The lower rate may be due to limitations of adequate resources and education, as well as differences in participant characteristics, study settings, and economic situations.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What diagnostic criteria for GDM does China currently use, and at what gestational age is it performed?",
+      "answer": "China uses a 2-hour 75 g OGTT performed during 24-28 gestational weeks in all pregnant women without overt diabetes, based on the IADPSG criteria.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What are the plasma glucose cutoff values for diagnosing GDM with a 75 g OGTT in China?",
+      "answer": "GDM is diagnosed if any value meets or exceeds: 5.1 mmol/L at fasting; 10.0 mmol/L at 1 hour; and 8.5 mmol/L at 2 hours.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What is the alternative screening approach in low-resourced rural areas of China if a 75 g OGTT is not feasible?",
+      "answer": "Fasting Plasma Glucose (FPG) during 24-28 weeks of gestation is an acceptable alternative. A 75 g OGTT is only needed for those with 4.4 mmol/L ≤ FPG < 5.1 mmol/L.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "What is the risk of GDM for women with advanced maternal age (≥35 years) compared to younger women?",
+      "answer": "The incidence of GDM in women with advanced age was 26.7%, whereas in younger pregnant women, it was only 13.4%. The risk exhibits a linear relationship, increasing by 12.74% for each one-year increase in maternal age from 18 years for Asian women.",
+      "source_section": "Risk Factors for GDM in China - Advanced Maternal Age"
+    },
+    {
+      "question": "How does pre-pregnancy BMI affect the risk of GDM in Asian women?",
+      "answer": "The risk of GDM increases with increasing pre-pregnancy BMI. The prevalence is highest among women with BMI ≥ 30 kg/m² (13.78%), followed by BMI ≥ 25 kg/m² (10.22%) and then BMI ≥ 20 kg/m² (6.09%). Pre-pregnancy BMI ≥ 25 kg/m² can increase the risk by more than three-fold (OR = 3.27).",
+      "source_section": "Risk Factors for GDM in China - Pre-Pregnancy Overweight or Obesity"
+    },
+    {
+      "question": "Is excessive gestational weight gain a risk factor for GDM, and when is it particularly impactful?",
+      "answer": "Yes, high rates of gestational weight gain, particularly during early pregnancy, increase the risk of GDM. A rate of weight gain of 0.28 kg per week or more was associated with an increased risk (OR = 2.03).",
+      "source_section": "Risk Factors for GDM in China - Excessive Gestational Weight Gain"
+    },
+    {
+      "question": "What is the estimated recurrence rate of GDM in a subsequent pregnancy after an initial GDM-affected pregnancy?",
+      "answer": "GDM occurs in about 30-69% of subsequent pregnancies after an initial pregnancy affected with GDM.",
+      "source_section": "Risk Factors for GDM in China - History of GDM"
+    },
+    {
+      "question": "How do changes in dietary patterns and lifestyle, such as westernization, influence GDM risk in China?",
+      "answer": "Frequent consumption of potato, meat/processed meat, animal-derived protein, sweets, and seafood is associated with an increased risk of GDM. Conversely, a diet high in vegetables, fruit, and rice is associated with a lower risk.",
+      "source_section": "Risk Factors for GDM in China - Changes in Dietary Pattern and Lifestyle"
+    },
+    {
+      "question": "Is a sedentary lifestyle a risk factor for GDM among Chinese pregnant women?",
+      "answer": "Yes, sitting at home for 2-4 hours per day (OR = 1.59) and >4 hours per day (OR = 1.73) were associated with significantly increased risk of GDM.",
+      "source_section": "Risk Factors for GDM in China - Changes in Dietary Pattern and Lifestyle"
+    },
+    {
+      "question": "How does a family history of diabetes in first-degree relatives affect the risk of GDM?",
+      "answer": "It is an independent risk factor, increasing the risk by 1.48 to 3.60 times. Both paternal and maternal history of diabetes are positive associated.",
+      "source_section": "Risk Factors for GDM in China - Family History of Diabetes in First-Degree Relatives"
+    },
+    {
+      "question": "Is Polycystic Ovary Syndrome (PCOS) considered a risk factor for GDM?",
+      "answer": "Yes, PCOS is a strong and independent risk factor for GDM, increasing the risk by approximately 1.5 to 2.15-fold, regardless of weight and age.",
+      "source_section": "Risk Factors for GDM in China - Polycystic Ovarian Syndrome"
+    },
+    {
+      "question": "What is the 'One-day Care Clinic' model for GDM management in China, and when was it established?",
+      "answer": "It is a comprehensive management model established in May 2011 at Peking University First Hospital. It educates GDM patients on basic knowledge of GDM, dietary intervention, physical exercise, weight management, and blood glucose self-monitoring methods.",
+      "source_section": "Prevention and Lifestyle Intervention of GDM in China"
+    },
+    {
+      "question": "What are the first-line preventive strategies for GDM prevention and intervention?",
+      "answer": "Lifestyle interventions, including dietary intervention and physical exercise, are the effective and first-line preventive strategies.",
+      "source_section": "Prevention and Lifestyle Intervention of GDM in China"
+    },
+    {
+      "question": "According to the Finnish Gestational Diabetes Prevention Study (RADIEL), how effective is lifestyle intervention in reducing GDM incidence in high-risk pregnant women?",
+      "answer": "A moderate individualized lifestyle intervention reduced the incidence of GDM by 39%.",
+      "source_section": "Prevention and Lifestyle Intervention of GDM in China"
+    },
+    {
+      "question": "How much can physical exercise started early in pregnancy decrease the risk of GDM in overweight and obese pregnant women, according to a Chinese RCT?",
+      "answer": "Physical exercise three times per week for at least 30 minutes per session decreased the risk of GDM by 45.8%.",
+      "source_section": "Prevention and Lifestyle Intervention of GDM in China"
+    },
+    {
+      "question": "What is the Developmental Origins of Health and Disease (DOHaD) theory proposed by David Barker?",
+      "answer": "The theory states that the intrauterine environmental conditions in early life have profound implications for long-term health and the development of chronic non-communicable diseases in adulthood.",
+      "source_section": "Prevention and Lifestyle Intervention of GDM in China"
+    },
+    {
+      "question": "What is the current status of postpartum follow-up rates for women with GDM in China?",
+      "answer": "The postpartum follow-up rate is relatively low. For example, one study at Tianjin Obstetrics and Gynecology Hospital found that only 13.1% of women screened for blood glucose levels after delivery.",
+      "source_section": "Prevention and Lifestyle Intervention of GDM in China, Conclusions"
+    },
+    {
+      "question": "According to the ADA guidelines, when should women with GDM be screened postpartum?",
+      "answer": "The ADA recommends that women with GDM should be screened with a 75 g OGTT at 4-12 weeks postpartum.",
+      "source_section": "Conclusions"
+    },
+    {
+      "question": "What are the common symptoms of PCOS?",
+      "answer": "Common symptoms include menstrual irregularities, infertility, obesity, hirsutism, acne, clinical hyperandrogenism, anovulation/oligoanovulation, and polycystic ovarian shape.",
+      "source_section": "PCOS and GDM document - Symptoms of PCOS"
+    },
+    {
+      "question": "What percentage of women with PCOS are reported to develop Insulin Resistance (IR)?",
+      "answer": "Nearly 50% of women who have PCOS are reported to develop IR.",
+      "source_section": "PCOS and GDM document"
+    },
+    {
+      "question": "What is the relationship between PCOS and the risk of GDM?",
+      "answer": "PCOS is an independent risk factor for GDM. Women with PCOS have a significantly higher risk (approximately 40% higher, or up to 3-fold according to some meta-analyses) of developing GDM and other pregnancy complications.",
+      "source_section": "PCOS and GDM document"
+    },
+    {
+      "question": "According to the document, does GDM disappear completely after childbirth?",
+      "answer": "No. While GDM often resolves, it is a warning symptom for future metabolic syndrome, CVD, and T2DM. Approximately 10% to 50% of women with GDM can acquire diabetes within the first 5 years of motherhood.",
+      "source_section": "PCOS and GDM document"
+    },
+    {
+      "question": "What are the key etiological factors in the prognosis of GDM?",
+      "answer": "Insulin Resistance (IR) is one of the key etiological factors. The pathophysiology is characterized by an imbalance between pancreatic β-cell function and the higher insulin demands of pregnancy.",
+      "source_section": "PCOS and GDM document"
+    },
+    {
+      "question": "What is the Rotterdam criteria for diagnosing PCOS?",
+      "answer": "The Rotterdam criteria (2003) mandate that at least 2 of the following 3 characteristics must be present: 1) oligo- and/or anovulation, 2) clinical and/or biochemical evidence of hyperandrogenism (HA), or 3) polycystic ovaries on ultrasound, after excluding other potential etiologies.",
+      "source_section": "PCOS and GDM document - Diagnosis of PCOS"
+    },
+    {
+      "question": "What are the pharmacotherapy options mentioned for PCOS?",
+      "answer": "Common pharmacotherapies include oral contraceptive pills (OCP), insulin-sensitizing medicines like metformin, anti-androgens, cyclic progestins, and fertility therapies like clomiphene citrate. Vitamin D and inositol are also mentioned as supplements.",
+      "source_section": "PCOS and GDM document - Prevention and treatment of PCOS"
+    },
+    {
+      "question": "What is the gold standard pharmacotherapy for treating GDM according to major international guidelines?",
+      "answer": "Insulin remains the gold standard for pharmacotherapy for treating GDM.",
+      "source_section": "PCOS and GDM document - Prevention and treatment of GDM"
+    },
+    {
+      "question": "What lifestyle change is mentioned as being protective against the progression from GDM to T2DM?",
+      "answer": "Breastfeeding is mentioned as a way to reduce the chance of developing T2DM, with studies suggesting it can postpone the progression by at least 10 years.",
+      "source_section": "PCOS and GDM document - Prevention and treatment of GDM"
+    },
+    {
+      "question": "What are the two primary diagnostic approaches currently used to identify GDM, as mentioned in the Continuing Education Activity?",
+      "answer": "The two primary diagnostic approaches are the 'One-step' approach (2-hour 75-g OGTT) and the 'Two-step' approach (1-hour 50-g glucose challenge test followed by a 3-hour 100-g OGTT for those who screen positive).",
+      "source_section": "Continuing Education Activity"
+    },
+    {
+      "question": "What is the role of Human Placental Lactogen in normal pregnancy and in GDM?",
+      "answer": "Human placental lactogen is the primary hormone associated with increased insulin resistance. In normal pregnancies, it also increases insulin secretion to regulate hyperglycemia. In GDM, pancreatic β-cell dysfunction prevents this compensation, leading to hyperglycemia.",
+      "source_section": "Continuing Education Activity - Etiology"
+    },
+    {
+      "question": "What percentage of patients diagnosed with GDM are estimated to have Maturity-Onset Diabetes of the Young (MODY)?",
+      "answer": "An estimated 5% of patients diagnosed with GDM have MODY.",
+      "source_section": "Continuing Education Activity - Etiology"
+    },
+    {
+      "question": "What are the ACOG recommendations for postpartum screening following a GDM diagnosis?",
+      "answer": "ACOG recommends postpartum screening between 4 to 12 weeks after delivery using a fasting plasma glucose test or a 75-g, 2-hour OGTT. If normal, screening for diabetes every 1 to 3 years is recommended.",
+      "source_section": "Continuing Education Activity - Postpartum Gestational Diabetes Evaluation"
+    },
+    {
+      "question": "What is the recommended amount and type of exercise for patients with GDM?",
+      "answer": "30 minutes of moderate-intensity aerobic exercise, at least 5 days a week (minimum 150 minutes per week). Postprandial exercise is often recommended.",
+      "source_section": "Continuing Education Activity - Nonpharmacologic Therapies"
+    },
+    {
+      "question": "What are the ACOG-recommended blood glucose targets for women with GDM?",
+      "answer": "ACOG suggests a glucose target of less than 95 mg/dL fasting and 140 mg/dL at 1-hour postprandial or 120 mg/dL at 2-hours postprandial.",
+      "source_section": "Continuing Education Activity - Glucose monitoring"
+    },
+    {
+      "question": "Why is glyburide no longer recommended as a first-line therapy for GDM by ACOG?",
+      "answer": "Recent studies indicate glyburide crosses the placental barrier and is associated with an increased risk of neonatal intensive care admission, respiratory distress syndrome, hypoglycemia, and birth injury.",
+      "source_section": "Continuing Education Activity - Oral hypoglycemic agents"
+    },
+    {
+      "question": "What is the role of chronic low-grade inflammation in the development of GDM?",
+      "answer": "Chronic low-grade inflammation, often associated with obesity, impairs insulin signaling. Adipose tissue secretes pro-inflammatory cytokines (TNF-α, IL-6) which activate pathways (JNK, NF-κB) that interfere with insulin receptor signaling, contributing to insulin resistance.",
+      "source_section": "Chapter 12 - The Role of Inflammation"
+    },
+    {
+      "question": "How is adiponectin levels related to GDM risk?",
+      "answer": "Adiponectin is an anti-inflammatory protein that enhances insulin sensitivity. The majority of studies show that low adiponectin levels are inversely related to GDM risk.",
+      "source_section": "Chapter 12 - Adiponectin"
+    },
+    {
+      "question": "What is the general function of adipocyte fatty acid-binding protein (AFABP) and its status in GDM?",
+      "answer": "AFABP functions as a pro-inflammatory cytokine and is highly expressed in macrophages. It is elevated in GDM cases and has been linked to adiposity markers in fetuses of women with GDM.",
+      "source_section": "Chapter 12 - Adipocyte Fatty Acid-Binding Protein"
+    },
+    {
+      "question": "How do elevated free fatty acids (FFAs) contribute to inflammation and insulin resistance?",
+      "answer": "Elevated FFAs can induce the innate immune response by binding to toll-like receptors (TLRs), inducing pro-inflammatory cytokine secretion. They can also cause oxidative stress and contribute to β-cell inflammation.",
+      "source_section": "Chapter 12 - Lipids and Their Metabolites"
+    },
+    {
+      "question": "What is the proposed mechanism by which Branched Chain Amino Acids (BCAAs) might contribute to insulin resistance?",
+      "answer": "BCAAs, particularly leucine, can activate the mammalian target of rapamycin (mTOR) pathway, which has been linked to the secretion of pro-inflammatory cytokines and can lead to phosphorylation events that inhibit insulin signaling.",
+      "source_section": "Chapter 12 - Amino Acids and Their Metabolites"
+    },
+    {
+      "question": "How does the gut microbiota of women with GDM differ from that of healthy pregnant women?",
+      "answer": "Women with GDM often show a decrease in α-diversity, an increase in the Firmicutes/Bacteroidetes (F/B) ratio, an increase in Gram-negative bacteria (e.g., Parabacteroides, Prevotella, Desulfovibrio), and a decrease in SCFA-producing genera (e.g., Faecalibacterium, Roseburia, Akkermansia).",
+      "source_section": "The Intestinal Dysbiosis of Mothers with GDM - Table 1"
+    },
+    {
+      "question": "How does the gut microbiota of newborns from GDM mothers differ from those from healthy mothers?",
+      "answer": "Newborns from GDM mothers show lower α-diversity, increased Proteobacteria and Actinobacteria, decreased Bacteroidetes, and decreased levels of beneficial bacteria like Prevotella and Lactobacillus.",
+      "source_section": "The Intestinal Dysbiosis of Mothers with GDM - Table 2"
+    },
+    {
+      "question": "What is the estimated proportion of an infant's gut microbial species that are transmitted from the mother on the day of delivery?",
+      "answer": "According to a study by Ferretti et al., the proportion of the gut microbial species of the infant that were transmitted from the mother reached up to 50.7% on the day of delivery.",
+      "source_section": "The Intestinal Dysbiosis of Mothers with GDM - Vertical Transmission"
+    },
+    {
+      "question": "How does the breast milk of GDM mothers differ in composition from that of healthy mothers, and how might this affect the infant's gut?",
+      "answer": "The breast milk of GDM mothers shows reduced levels of SIgA, altered N-glycosylation of proteins, and lower levels of certain free fatty acids and hormones (adiponectin, Nesfatin-1, adropin). These changes can impact the colonization of beneficial bacteria like Bifidobacterium and may promote an imbalance in the infant's gut microbiome.",
+      "source_section": "The Intestinal Dysbiosis of Mothers with GDM - Effect of Breast Milk"
+    },
+    {
+      "question": "What is the main finding of the updated systematic review and meta-analysis regarding PAPP-A levels and GDM risk?",
+      "answer": "The meta-analysis found that women with GDM had significantly lower PAPP-A levels (pooled SMD = -0.31) and that women with a low PAPP-A level had a significantly higher risk of developing GDM (pooled OR = 1.75).",
+      "source_section": "Prognostic Impact of PAPP-A for GDM - Abstract"
+    },
+    {
+      "question": "What is the primary physiological role of Pregnancy-Associated Plasma Protein-A (PAPP-A) during pregnancy?",
+      "answer": "PAPP-A is a glycoprotein that plays a pivotal role in fetal development by regulating insulin-like growth factors (IGFs), which promote trophoblast invasion and vascularization of the placental bed.",
+      "source_section": "Prognostic Impact of PAPP-A for GDM - Introduction"
+    },
+    {
+      "question": "What are the different screening approaches recommended by ACOG and the IADPSG/ADA for GDM at 24-28 weeks?",
+      "answer": "ACOG recommends a two-step approach (50g glucose challenge test followed by a 100g OGTT for positives). IADPSG and ADA advocate for a one-step approach using a 2-hour 75g OGTT.",
+      "source_section": "Review Article - Screening Controversies, Table 1"
+    },
+    {
+      "question": "According to the ACHOIS trial, what is the benefit of treating women with GDM?",
+      "answer": "The ACHOIS trial aimed to determine if treatment of GDM reduced the risk of perinatal complications. It is cited as supporting the adoption of IADPSG criteria for reducing fetal birth weight over the 90th percentile and the risk of maternal preeclampsia.",
+      "source_section": "Review Article - Screening Controversies"
+    },
+    {
+      "question": "Besides dietary intervention and physical exercise, what other non-pharmacologic therapy is recommended for managing GDM?",
+      "answer": "Glucose monitoring, typically 4 times a day (fasting and postprandial), is recommended to track glucose levels and guide management.",
+      "source_section": "Review Article - Management Controversies, Continuing Education Activity"
+    },
+    {
+      "question": "What is the approximate cost difference per pregnancy with GDM compared to one without, according to a 2015 modeling study in China?",
+      "answer": "The cost of a pregnancy with GDM was ¥6677.37 more than a pregnancy without GDM, due to additional expenses during both the pregnancy and delivery.",
+      "source_section": "Background"
+    },
+    {
+      "question": "What is the name of the guideline jointly developed by Chinese Medical Association branches for GDM diagnosis and treatment?",
+      "answer": "The 'Guideline for Diagnosis and Treatment of Gestational Diabetes Mellitus (2014)'.",
+      "source_section": "Prevalence of GDM in China"
+    },
+    {
+      "question": "According to the review on inflammation, what is the state of chemerin levels in healthy pregnant women and how might it relate to GDM?",
+      "answer": "In healthy pregnant women, chemerin levels are higher, which may help lower insulin resistance. Women with recurrent GDM may have lower levels, increasing their risk of T2DM.",
+      "source_section": "PCOS and GDM document - Obstetric disorders"
+    },
+    {
+      "question": "What is the significance of the HAPO study?",
+      "answer": "The Hyperglycemia and Adverse Pregnancy Outcome (HAPO) study was a landmark study that demonstrated a direct, continuous, and graded correlation between maternal glucose levels and adverse pregnancy outcomes, leading to the development of the IADPSG diagnostic criteria.",
+      "source_section": "Review Article"
+    },
+    {
+      "question": "How does the prevalence of GDM vary between different ethnic groups at the same BMI?",
+      "answer": "Asian and Filipino women have an increased risk of GDM at a lower Body Mass Index (BMI) cut point compared to non-Hispanic white and African American women.",
+      "source_section": "Chapter 12 - Introduction"
+    },
+    {
+      "question": "What are advanced glycated end products (AGEs) and how are they related to GDM?",
+      "answer": "AGEs are formed by glycation and oxidative reactions. They can alter cell signaling and induce inflammation via NF-κB. They are higher in women with GDM but are more useful for diagnosis than early screening due to their link to hyperglycemia.",
+      "source_section": "Chapter 12 - Oxidative Stress Markers"
+    },
+    {
+      "question": "How might the use of Assisted Reproductive Technology (ART) affect the risk of GDM?",
+      "answer": "Several studies and meta-analyses suggest that ART is associated with an increased risk of GDM, independent of other risk factors like age and obesity.",
+      "source_section": "PCOS and GDM document - Obstetric disorders"
+    }
+  ]
+}
