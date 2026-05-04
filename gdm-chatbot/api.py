@@ -139,5 +139,3 @@ def chat(
 @app.get("/")
 def home():
     return {"message": "API is running"}
-
-print("API_SECRET =", API_SECRET)
