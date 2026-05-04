@@ -7,9 +7,16 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send } from "lucide-react";
+import { Send, Mic, MicOff } from "lucide-react";
 
 import { toast } from "sonner";
+
+// Web Speech API types (not in default TS lib)
+type SpeechRecognitionType = any;
+const getSpeechRecognition = (): SpeechRecognitionType | null => {
+  if (typeof window === "undefined") return null;
+  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || null;
+};
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -39,12 +46,64 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
+  const [isListening, setIsListening] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
+  const speechSupported = typeof window !== "undefined" && !!getSpeechRecognition();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    return () => {
+      try { recognitionRef.current?.stop?.(); } catch {}
+    };
+  }, []);
+
+  const toggleVoiceInput = () => {
+    const SR = getSpeechRecognition();
+    if (!SR) {
+      toast.error("Voice input isn't supported in this browser. Try Chrome or Safari.");
+      return;
+    }
+    if (isListening) {
+      try { recognitionRef.current?.stop?.(); } catch {}
+      setIsListening(false);
+      return;
+    }
+    try {
+      const recognition = new SR();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = navigator.language || "en-US";
+
+      recognition.onstart = () => setIsListening(true);
+      recognition.onresult = (event: any) => {
+        let transcript = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        setInput(transcript);
+      };
+      recognition.onerror = (e: any) => {
+        setIsListening(false);
+        if (e?.error === "not-allowed" || e?.error === "service-not-allowed") {
+          toast.error("Microphone permission denied.");
+        } else if (e?.error !== "aborted" && e?.error !== "no-speech") {
+          toast.error("Voice input error. Please try again.");
+        }
+      };
+      recognition.onend = () => setIsListening(false);
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch {
+      setIsListening(false);
+      toast.error("Couldn't start voice input.");
+    }
+  };
 
   const sendMessage = async (text?: string) => {
     const messageText = text || input.trim();
@@ -160,9 +219,22 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything..."
+              placeholder={isListening ? "Listening..." : "Ask me anything..."}
               className="flex-1 rounded-xl bg-muted/50 border-0 focus-visible:ring-1"
             />
+            {speechSupported && (
+              <Button
+                type="button"
+                size="icon"
+                variant={isListening ? "default" : "ghost"}
+                onClick={toggleVoiceInput}
+                disabled={isLoading}
+                className={`rounded-xl shrink-0 ${isListening ? "animate-pulse" : ""}`}
+                aria-label={isListening ? "Stop voice input" : "Start voice input"}
+              >
+                {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+              </Button>
+            )}
             <Button
               type="submit"
               size="icon"

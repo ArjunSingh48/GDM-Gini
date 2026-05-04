@@ -136,7 +136,12 @@ const Onboarding = () => {
         {/* Step Content */}
         <div className="animate-fade-in" key={step}>
           {step === 0 && (
-            <div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (canProceed()) setStep(step + 1);
+              }}
+            >
               <h1 className="text-2xl font-display font-bold mb-1">{steps[0].title}</h1>
               <p className="text-sm text-muted-foreground mb-6">{steps[0].subtitle}</p>
 
@@ -144,8 +149,15 @@ const Onboarding = () => {
                 <div>
                   <Label className="text-sm font-semibold">What's your name?</Label>
                   <Input
+                    autoFocus
                     value={data.name}
                     onChange={(e) => setData({ ...data, name: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        (e.currentTarget.closest("form")?.querySelector('[data-field="age"]') as HTMLInputElement | null)?.focus();
+                      }
+                    }}
                     placeholder="Mama"
                     className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
                   />
@@ -153,9 +165,16 @@ const Onboarding = () => {
                 <div>
                   <Label className="text-sm font-semibold">Your age</Label>
                   <Input
+                    data-field="age"
                     type="number"
                     value={data.age}
                     onChange={(e) => setData({ ...data, age: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        (e.currentTarget.closest("form")?.querySelector('[data-field="bmi"]') as HTMLInputElement | null)?.focus();
+                      }
+                    }}
                     placeholder="32"
                     className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
                   />
@@ -163,6 +182,7 @@ const Onboarding = () => {
                 <div>
                   <Label className="text-sm font-semibold">Pre-pregnancy BMI (optional)</Label>
                   <Input
+                    data-field="bmi"
                     type="number"
                     step="0.1"
                     value={data.preBMI}
@@ -172,11 +192,17 @@ const Onboarding = () => {
                   />
                 </div>
               </div>
-            </div>
+              <button type="submit" className="hidden" aria-hidden />
+            </form>
           )}
 
           {step === 1 && (
-            <div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (canProceed()) setStep(step + 1);
+              }}
+            >
               <h1 className="text-2xl font-display font-bold mb-1">{steps[1].title}</h1>
               <p className="text-sm text-muted-foreground mb-6">{steps[1].subtitle}</p>
 
@@ -184,9 +210,16 @@ const Onboarding = () => {
                 <div>
                   <Label className="text-sm font-semibold">Current week of pregnancy</Label>
                   <Input
+                    autoFocus
                     type="number"
                     value={data.pregnancyWeek}
                     onChange={(e) => setData({ ...data, pregnancyWeek: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        (e.currentTarget.closest("form")?.querySelector('[data-field="glucose"]') as HTMLInputElement | null)?.focus();
+                      }
+                    }}
                     placeholder="36"
                     className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
                   />
@@ -194,6 +227,7 @@ const Onboarding = () => {
                 <div>
                   <Label className="text-sm font-semibold">Fasting glucose (mg/dL) — optional</Label>
                   <Input
+                    data-field="glucose"
                     type="number"
                     value={data.fastingGlucose}
                     onChange={(e) => setData({ ...data, fastingGlucose: e.target.value })}
@@ -203,7 +237,8 @@ const Onboarding = () => {
                   <p className="text-xs text-muted-foreground mt-1.5">Normal fasting range: 70–92 mg/dL</p>
                 </div>
               </div>
-            </div>
+              <button type="submit" className="hidden" aria-hidden />
+            </form>
           )}
 
           {step === 2 && (
