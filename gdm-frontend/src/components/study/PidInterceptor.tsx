@@ -12,13 +12,22 @@ const PidInterceptor = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const fromUrl = params.get("pid")?.trim() || "";
+    // Prolific sends PROLIFIC_PID; also accept pid/prolific_pid as fallbacks
+    const pidKeys = ["PROLIFIC_PID", "prolific_pid", "pid", "PID"];
+    let fromUrl = "";
+    let foundKey: string | null = null;
+    for (const k of pidKeys) {
+      const v = params.get(k)?.trim();
+      if (v) { fromUrl = v; foundKey = k; break; }
+    }
     const stored = getStoredPid();
 
-    // Lock the first PID we see and strip it from the URL
+    // Lock the first PID we see and strip Prolific params from the URL
     if (isValidPid(fromUrl) && !stored) {
       setStoredPid(fromUrl);
-      params.delete("pid");
+    }
+    if (foundKey) {
+      ["PROLIFIC_PID", "prolific_pid", "pid", "PID", "STUDY_ID", "SESSION_ID"].forEach((k) => params.delete(k));
       const clean = location.pathname + (params.toString() ? `?${params}` : "") + location.hash;
       window.history.replaceState({}, "", clean);
     }

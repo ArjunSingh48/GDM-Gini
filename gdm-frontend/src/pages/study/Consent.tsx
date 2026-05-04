@@ -33,27 +33,61 @@ const Consent = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="max-w-2xl w-full bg-card border border-border rounded-2xl shadow-sm p-8 space-y-6">
         <header className="space-y-2">
-          <h1 className="text-2xl font-display font-bold">Participant Consent Form</h1>
-          <p className="text-sm text-muted-foreground">Please read carefully before continuing.</p>
+          <h1 className="text-2xl font-display font-bold">MOMentum: A Digital Women's Health Intervention Targeting Gestational Diabetes Mellitus (GDM)</h1>
+          <p className="text-sm text-muted-foreground">Participation Information and Consent Form</p>
         </header>
 
         <div className="max-h-[50vh] overflow-y-auto pr-2 space-y-4 text-sm leading-relaxed text-foreground/90">
-          <p><strong>Study purpose.</strong> You are invited to participate in a research study about how people interact with an AI assistant. The session takes approximately 10–15 minutes.</p>
-          <p><strong>What you'll do.</strong> You will answer a short survey, then have a brief conversation with an AI assistant. All your responses will be logged for analysis.</p>
-          <p><strong>Data collected.</strong> Your Prolific Participant ID, your survey answers, and the text of your conversation with the assistant. We do not collect your name, email beyond what you optionally provide for an account, or any contact details.</p>
-          <p><strong>Confidentiality.</strong> Your data is stored securely and only the research team has access. Reports will use aggregated, de-identified data.</p>
-          <p><strong>Voluntary participation.</strong> You can stop at any time. If you decline below, you will be returned to Prolific and no data is collected beyond your consent decision.</p>
-          <p><strong>Compensation.</strong> You will be compensated through Prolific upon completing the study and returning via the completion link.</p>
-          <p><strong>Contact.</strong> For questions about this research, please contact the research team via Prolific messaging.</p>
-          <p>By clicking <em>I consent</em> you confirm you are 18 or older and agree to participate under the terms above.</p>
+          <p>We appreciate your decision to participate in this project. Please read the text below carefully and check the box if you agree with the study conditions. We are happy to answer questions or provide additional information if required.</p>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Purpose of the Study</h2>
+            <p>This survey aims to conduct a test for the MOMentum App prototype. By interacting with the demo, participants will help evaluate the tool's functional design and its effectiveness in supporting GDM management. Your insights will be crucial in refining the digital intervention before its final development.</p>
+          </div>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Who can participate in the study?</h2>
+            <p>Anyone older than 18 years old, having experience with GDM.</p>
+          </div>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Study Procedure</h2>
+            <p>Participation in this study involves completing an online questionnaire, which will take approximately 5–10 minutes. The questionnaire covers topics related to epidemiologic information, the experience with GDM and digital health technologies. There are no right or wrong answers — we are simply interested in your personal views and experiences.</p>
+            <p>Participation is voluntary. You may withdraw from the study at any time without providing a reason and without facing any disadvantages.</p>
+            <p>Your responses will be strictly confidential. All data will be anonymized and stored in a way that prevents any identification of individual participants.</p>
+            <p>Anonymized aggregated data might be published in scientific outlets.</p>
+            <p>Should you choose to withdraw your data after participation, you may do so at any point until July 30, 2026. After this date, all data will have been fully anonymized and can no longer be linked to individual participants.</p>
+          </div>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Possible Risks and Benefits</h2>
+            <p>There are no known risks associated with this study. If you feel uncomfortable at any point, you may stop the interview or questionnaire at any time. Your participation will contribute to the development of better data for female health research.</p>
+          </div>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Project Lead</h2>
+            <p>Prof. Dr. Marcia Nißen &lt;marcia.nissen@uzh.ch&gt;</p>
+          </div>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Contact persons</h2>
+            <p>Arjun Singh Bhadoria &lt;arjunsingh.bhadoria@uzh.ch&gt;; Roshni Gopal &lt;roshni.gopal@uzh.ch&gt;; Qiqi Li &lt;qiqi.li@uzh.ch&gt;; Yue Zhang &lt;yue.zhang2@uzh.ch&gt;; Leyi Hu &lt;leyi.hu@uzh.ch&gt;; Wan-Yu Sung &lt;wan-yu.sung@uzh.ch&gt;</p>
+          </div>
+
+          <div>
+            <h2 className="font-semibold text-foreground">Research Institute</h2>
+            <p>UZH Digital Society Initiative — <a href="https://www.dsi.uzh.ch" target="_blank" rel="noreferrer" className="underline text-primary">https://www.dsi.uzh.ch</a></p>
+          </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <p className="text-sm font-medium pt-2">Do you agree to the above consent form? <span className="text-coral">*</span></p>
+
+        <div className="flex flex-col sm:flex-row gap-3">
           <Button onClick={decline} variant="outline" disabled={busy} className="rounded-xl flex-1">
-            I do not consent
+            Disagree
           </Button>
           <Button onClick={accept} disabled={busy} className="rounded-xl flex-1">
-            I consent
+            Agree
           </Button>
         </div>
       </div>
