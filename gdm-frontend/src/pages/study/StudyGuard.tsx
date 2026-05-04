@@ -1,19 +1,16 @@
 import { useEffect, useState, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { getStoredPid } from "@/lib/study/pid";
 import { hasConsent } from "@/lib/study/consent";
 
 const StudyGuard = ({ children }: { children: ReactNode }) => {
-  const [state, setState] = useState<"loading" | "ok" | "no-pid" | "no-consent" | "no-auth">("loading");
+  const [state, setState] = useState<"loading" | "ok" | "no-pid" | "no-consent">("loading");
 
   useEffect(() => {
     const pid = getStoredPid();
     if (!pid) { setState("no-pid"); return; }
     if (!hasConsent()) { setState("no-consent"); return; }
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setState(session ? "ok" : "no-auth");
-    });
+    setState("ok");
   }, []);
 
   if (state === "loading") {
@@ -21,7 +18,6 @@ const StudyGuard = ({ children }: { children: ReactNode }) => {
   }
   if (state === "no-pid") return <Navigate to="/study" replace />;
   if (state === "no-consent") return <Navigate to="/consent" replace />;
-  if (state === "no-auth") return <Navigate to="/auth" replace />;
   return <>{children}</>;
 };
 

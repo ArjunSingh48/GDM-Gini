@@ -17,14 +17,20 @@ const Survey = () => {
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [pageStartedAt, setPageStartedAt] = useState<number>(Date.now());
   const [submitting, setSubmitting] = useState(false);
+  const [pidEditable, setPidEditable] = useState(false);
 
   useEffect(() => {
     if (!pid) {
-      navigate("/", { replace: true });
+      toast.error("No Prolific ID found — please open the study from your Prolific link.");
+      navigate("/profile", { replace: true });
       return;
     }
-    // Pre-fill prolific_id
     setAnswers((a) => ({ ...a, prolific_id: pid }));
+    // Make sure participant row exists so survey-save accepts answers
+    callFn("study-init", {
+      pid,
+      metadata: { ua: navigator.userAgent, source: "survey" },
+    }).catch(() => {});
   }, [pid, navigate]);
 
   useEffect(() => {
@@ -122,7 +128,27 @@ const Survey = () => {
                 {q.text}
                 {q.required && <span className="text-destructive ml-1">*</span>}
               </label>
-              <QuestionInput q={q} value={answers[q.id]} onChange={(v) => setAnswer(q.id, v)} />
+              {q.id === "prolific_id" ? (
+                <div className="flex gap-2 items-center">
+                  <Input
+                    value={(answers[q.id] as string) ?? ""}
+                    onChange={(e) => setAnswer(q.id, e.target.value)}
+                    placeholder={q.type === "text" ? q.placeholder : undefined}
+                    readOnly={!pidEditable}
+                    className={`rounded-xl h-11 flex-1 ${!pidEditable ? "bg-muted" : ""}`}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setPidEditable((v) => !v)}
+                    className="rounded-xl h-11"
+                  >
+                    {pidEditable ? "Done" : "Edit"}
+                  </Button>
+                </div>
+              ) : (
+                <QuestionInput q={q} value={answers[q.id]} onChange={(v) => setAnswer(q.id, v)} />
+              )}
             </div>
           ))}
         </div>
