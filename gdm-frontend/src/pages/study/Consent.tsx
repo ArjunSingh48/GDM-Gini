@@ -19,7 +19,7 @@ const Consent = () => {
     setBusy(true);
     await log(true);
     setConsent(true);
-    navigate("/study/auth", { replace: true });
+    navigate("/auth", { replace: true });
   };
 
   const decline = async () => {

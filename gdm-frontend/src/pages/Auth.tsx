@@ -7,6 +7,10 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ChevronRight, Eye, EyeOff } from "lucide-react";
 import { useDemoAuth } from "@/hooks/useDemoAuth";
+import { getStoredPid } from "@/lib/study/pid";
+import { hasConsent } from "@/lib/study/consent";
+import { linkPid } from "@/lib/study/auth";
+import { callFn } from "@/lib/study/network";
 
 const CuteGiniSVG = () => (
   <svg width="80" height="80" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +45,17 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const maybeLinkStudyPid = async () => {
+    const pid = getStoredPid();
+    if (!pid || !hasConsent()) return;
+    try {
+      await linkPid(pid);
+      await callFn("study-init", { pid, metadata: { ua: navigator.userAgent } }).catch(() => {});
+    } catch (e) {
+      console.warn("PID link failed:", e);
+    }
+  };
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -49,6 +64,7 @@ const Auth = () => {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        await maybeLinkStudyPid();
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
@@ -65,6 +81,7 @@ const Auth = () => {
         if (user) {
           await supabase.from("profiles").update({ name }).eq("user_id", user.id);
         }
+        await maybeLinkStudyPid();
         navigate("/onboarding");
       }
     } catch (error: any) {

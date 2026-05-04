@@ -21,7 +21,7 @@ const StudyGuard = ({ children }: { children: ReactNode }) => {
   }
   if (state === "no-pid") return <Navigate to="/study" replace />;
   if (state === "no-consent") return <Navigate to="/consent" replace />;
-  if (state === "no-auth") return <Navigate to="/study/auth" replace />;
+  if (state === "no-auth") return <Navigate to="/auth" replace />;
   return <>{children}</>;
 };
 
