@@ -376,6 +376,20 @@ const Profile = () => {
           </div>
         )}
         <p className="text-[10px] text-muted-foreground mt-3 italic">This is for testing purposes only.</p>
+
+        <div className="mt-4 pt-4 border-t border-border">
+          <Label className="text-sm font-medium block mb-1">Study Survey</Label>
+          <p className="text-xs text-muted-foreground mb-3">
+            Share your feedback about the app — takes ~5 minutes.
+          </p>
+          <Button
+            onClick={() => navigate("/study/survey")}
+            className="w-full rounded-xl gap-2"
+          >
+            <FileText className="w-4 h-4" />
+            Take the Survey
+          </Button>
+        </div>
       </SectionCard>
 
       {/* ──────────────── 6. Account Settings ──────────────── */}

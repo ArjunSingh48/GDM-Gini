@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import BottomNav from "./BottomNav";
 import GiniMascot from "@/components/gini/GiniMascot";
+import SurveyReminder from "@/components/study/SurveyReminder";
 
 const AppLayout = () => {
   return (
@@ -10,6 +11,7 @@ const AppLayout = () => {
       </main>
       <BottomNav />
       <GiniMascot />
+      <SurveyReminder />
     </div>
   );
 };

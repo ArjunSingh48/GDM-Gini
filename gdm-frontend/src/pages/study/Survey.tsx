@@ -7,79 +7,144 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { getStoredPid } from "@/lib/study/pid";
 import { callFn } from "@/lib/study/network";
-import { surveyQuestions, type SurveyQuestion } from "@/lib/study/questions";
+import { surveyPages, type SurveyQuestion } from "@/lib/study/questions";
+import { SURVEY_DONE_KEY } from "@/lib/study/surveyState";
 
 const Survey = () => {
   const navigate = useNavigate();
   const pid = getStoredPid();
-  const [idx, setIdx] = useState(0);
+  const [pageIdx, setPageIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
-  const [startedAt, setStartedAt] = useState<number>(Date.now());
-  const [saving, setSaving] = useState(false);
+  const [pageStartedAt, setPageStartedAt] = useState<number>(Date.now());
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!pid) navigate("/study", { replace: true });
+    if (!pid) {
+      navigate("/", { replace: true });
+      return;
+    }
+    // Pre-fill prolific_id
+    setAnswers((a) => ({ ...a, prolific_id: pid }));
   }, [pid, navigate]);
 
-  useEffect(() => { setStartedAt(Date.now()); }, [idx]);
+  useEffect(() => {
+    setPageStartedAt(Date.now());
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pageIdx]);
 
-  const q = surveyQuestions[idx];
-  const total = surveyQuestions.length;
-  const progress = useMemo(() => Math.round(((idx) / total) * 100), [idx, total]);
+  const page = surveyPages[pageIdx];
+  const totalPages = surveyPages.length;
+  const progress = useMemo(() => Math.round(((pageIdx) / totalPages) * 100), [pageIdx, totalPages]);
 
-  const setAnswer = (val: unknown) => setAnswers((a) => ({ ...a, [q.id]: val }));
-  const current = answers[q?.id];
+  const setAnswer = (id: string, val: unknown) => setAnswers((a) => ({ ...a, [id]: val }));
 
-  const isAnswered = () => {
-    if (!q.required) return true;
-    if (q.type === "multi") return Array.isArray(current) && current.length > 0;
-    if (q.type === "text" || q.type === "textarea") return typeof current === "string" && current.trim().length > 0;
-    return current !== undefined && current !== null && current !== "";
+  const isPageComplete = () => {
+    for (const q of page.questions) {
+      if (!q.required) continue;
+      const v = answers[q.id];
+      if (q.type === "multi") {
+        if (!Array.isArray(v) || v.length === 0) return false;
+      } else if (q.type === "text" || q.type === "textarea" || q.type === "number") {
+        if (typeof v !== "string" || v.trim().length === 0) return false;
+      } else {
+        if (v === undefined || v === null || v === "") return false;
+      }
+    }
+    return true;
   };
 
-  const next = async () => {
-    if (!pid || saving) return;
-    if (!isAnswered()) { toast.error("Please answer to continue"); return; }
-    setSaving(true);
+  const handleNext = () => {
+    if (!isPageComplete()) {
+      toast.error("Please answer all required questions");
+      return;
+    }
+    if (pageIdx + 1 < totalPages) setPageIdx(pageIdx + 1);
+  };
+
+  const handleBack = () => {
+    if (pageIdx > 0) setPageIdx(pageIdx - 1);
+  };
+
+  const handleSubmit = async () => {
+    if (!pid || submitting) return;
+    if (!isPageComplete()) {
+      toast.error("Please answer all required questions");
+      return;
+    }
+    setSubmitting(true);
     try {
-      await callFn("study-survey-save", {
-        pid,
-        question_id: q.id,
-        question_text: q.text,
-        answer: current ?? null,
-        time_spent_ms: Date.now() - startedAt,
-      });
-      if (idx + 1 < total) setIdx(idx + 1);
-      else navigate("/study/chat");
+      // Save every answered question
+      const allQs = surveyPages.flatMap((p) => p.questions);
+      const timeSpent = Date.now() - pageStartedAt;
+      for (const q of allQs) {
+        const ans = answers[q.id];
+        if (ans === undefined || ans === null || ans === "") continue;
+        await callFn("study-survey-save", {
+          pid,
+          question_id: q.id,
+          question_text: q.text,
+          answer: ans,
+          time_spent_ms: timeSpent,
+        });
+      }
+      try { localStorage.setItem(SURVEY_DONE_KEY, "1"); } catch {}
+      navigate("/study/done", { replace: true });
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Save failed — retrying network");
+      toast.error(e instanceof Error ? e.message : "Save failed — please try again");
     } finally {
-      setSaving(false);
+      setSubmitting(false);
     }
   };
 
-  if (!q) return null;
+  if (!page) return null;
+  const isLastPage = pageIdx === totalPages - 1;
 
   return (
     <div className="min-h-screen bg-background px-6 py-10 flex items-start justify-center">
       <div className="w-full max-w-xl">
         <div className="mb-6">
           <div className="flex justify-between text-xs text-muted-foreground mb-2">
-            <span>Question {idx + 1} of {total}</span>
+            <span>Section {pageIdx + 1} of {totalPages}</span>
             <span>{progress}%</span>
           </div>
           <Progress value={progress} />
         </div>
 
-        <div className="bg-card rounded-2xl shadow-soft p-6 space-y-5">
-          <h2 className="text-lg font-display font-semibold">{q.text}</h2>
-          <QuestionInput q={q} value={current} onChange={setAnswer} />
+        <div className="bg-card rounded-2xl shadow-sm p-6 space-y-6 border">
+          <div>
+            <h2 className="text-xl font-display font-semibold">{page.title}</h2>
+            {page.subtitle && <p className="text-sm text-muted-foreground mt-1">{page.subtitle}</p>}
+          </div>
+
+          {page.questions.map((q) => (
+            <div key={q.id} className="space-y-3">
+              <label className="block text-sm font-medium text-foreground">
+                {q.text}
+                {q.required && <span className="text-destructive ml-1">*</span>}
+              </label>
+              <QuestionInput q={q} value={answers[q.id]} onChange={(v) => setAnswer(q.id, v)} />
+            </div>
+          ))}
         </div>
 
-        <div className="mt-6 flex justify-end">
-          <Button onClick={next} disabled={saving} className="rounded-xl h-11 px-6">
-            {saving ? "Saving…" : idx + 1 === total ? "Continue to chat →" : "Next →"}
+        <div className="mt-6 flex justify-between gap-3">
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            disabled={pageIdx === 0 || submitting}
+            className="rounded-xl h-11 px-6"
+          >
+            ← Back
           </Button>
+          {isLastPage ? (
+            <Button onClick={handleSubmit} disabled={submitting} className="rounded-xl h-11 px-6">
+              {submitting ? "Submitting…" : "Submit & Finish"}
+            </Button>
+          ) : (
+            <Button onClick={handleNext} className="rounded-xl h-11 px-6">
+              Next →
+            </Button>
+          )}
         </div>
       </div>
     </div>
@@ -88,10 +153,37 @@ const Survey = () => {
 
 const QuestionInput = ({ q, value, onChange }: { q: SurveyQuestion; value: unknown; onChange: (v: unknown) => void }) => {
   if (q.type === "text") {
-    return <Input autoFocus value={(value as string) ?? ""} onChange={(e) => onChange(e.target.value)} placeholder={q.placeholder} className="rounded-xl h-11" />;
+    return (
+      <Input
+        value={(value as string) ?? ""}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={q.placeholder}
+        readOnly={q.readOnly}
+        className={`rounded-xl h-11 ${q.readOnly ? "bg-muted" : ""}`}
+      />
+    );
+  }
+  if (q.type === "number") {
+    return (
+      <Input
+        type="number"
+        inputMode="numeric"
+        value={(value as string) ?? ""}
+        onChange={(e) => onChange(e.target.value.replace(/[^0-9]/g, ""))}
+        placeholder={q.placeholder}
+        className="rounded-xl h-11"
+      />
+    );
   }
   if (q.type === "textarea") {
-    return <Textarea autoFocus value={(value as string) ?? ""} onChange={(e) => onChange(e.target.value)} placeholder={q.placeholder} className="rounded-xl min-h-28" />;
+    return (
+      <Textarea
+        value={(value as string) ?? ""}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={q.placeholder}
+        className="rounded-xl min-h-24"
+      />
+    );
   }
   if (q.type === "single") {
     return (
@@ -99,6 +191,7 @@ const QuestionInput = ({ q, value, onChange }: { q: SurveyQuestion; value: unkno
         {q.options.map((opt) => (
           <button
             key={opt}
+            type="button"
             onClick={() => onChange(opt)}
             className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-colors ${
               value === opt ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-muted"
@@ -110,45 +203,23 @@ const QuestionInput = ({ q, value, onChange }: { q: SurveyQuestion; value: unkno
       </div>
     );
   }
-  if (q.type === "multi") {
-    const arr = Array.isArray(value) ? (value as string[]) : [];
-    const toggle = (opt: string) => onChange(arr.includes(opt) ? arr.filter((x) => x !== opt) : [...arr, opt]);
-    return (
-      <div className="space-y-2">
-        {q.options.map((opt) => (
-          <button
-            key={opt}
-            onClick={() => toggle(opt)}
-            className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-colors ${
-              arr.includes(opt) ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-muted"
-            }`}
-          >
-            {arr.includes(opt) ? "✓ " : ""}{opt}
-          </button>
-        ))}
-      </div>
-    );
-  }
-  // likert
-  const min = q.min ?? 1, max = q.max ?? 5;
-  const nums = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  // multi
+  const arr = Array.isArray(value) ? (value as string[]) : [];
+  const toggle = (opt: string) => onChange(arr.includes(opt) ? arr.filter((x) => x !== opt) : [...arr, opt]);
   return (
-    <div>
-      <div className="flex gap-2 justify-between">
-        {nums.map((n) => (
-          <button
-            key={n}
-            onClick={() => onChange(n)}
-            className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-colors ${
-              value === n ? "border-primary bg-primary/10 text-primary" : "border-border bg-card hover:bg-muted"
-            }`}
-          >{n}</button>
-        ))}
-      </div>
-      <div className="flex justify-between text-xs text-muted-foreground mt-2">
-        <span>{q.minLabel ?? min}</span>
-        <span>{q.maxLabel ?? max}</span>
-      </div>
+    <div className="space-y-2">
+      {q.options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          onClick={() => toggle(opt)}
+          className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-colors ${
+            arr.includes(opt) ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-muted"
+          }`}
+        >
+          {arr.includes(opt) ? "✓ " : ""}{opt}
+        </button>
+      ))}
     </div>
   );
 };
