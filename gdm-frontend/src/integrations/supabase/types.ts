@@ -35,6 +35,38 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_logs: {
+        Row: {
+          bot_response: string | null
+          created_at: string
+          id: string
+          pid: string
+          user_query: string
+        }
+        Insert: {
+          bot_response?: string | null
+          created_at?: string
+          id?: string
+          pid: string
+          user_query: string
+        }
+        Update: {
+          bot_response?: string | null
+          created_at?: string
+          id?: string
+          pid?: string
+          user_query?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_logs_pid_fkey"
+            columns: ["pid"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["pid"]
+          },
+        ]
+      }
       forum_comments: {
         Row: {
           author_name: string
@@ -196,6 +228,36 @@ export type Database = {
         }
         Relationships: []
       }
+      participants: {
+        Row: {
+          auth_user_id: string | null
+          completed_at: string | null
+          completion_code: string | null
+          id: string
+          metadata: Json
+          pid: string
+          session_start: string
+        }
+        Insert: {
+          auth_user_id?: string | null
+          completed_at?: string | null
+          completion_code?: string | null
+          id?: string
+          metadata?: Json
+          pid: string
+          session_start?: string
+        }
+        Update: {
+          auth_user_id?: string | null
+          completed_at?: string | null
+          completion_code?: string | null
+          id?: string
+          metadata?: Json
+          pid?: string
+          session_start?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
@@ -286,12 +348,50 @@ export type Database = {
         }
         Relationships: []
       }
+      survey_responses: {
+        Row: {
+          answer: Json
+          created_at: string
+          id: string
+          pid: string
+          question_id: string
+          question_text: string | null
+          time_spent_ms: number | null
+        }
+        Insert: {
+          answer: Json
+          created_at?: string
+          id?: string
+          pid: string
+          question_id: string
+          question_text?: string | null
+          time_spent_ms?: number | null
+        }
+        Update: {
+          answer?: Json
+          created_at?: string
+          id?: string
+          pid?: string
+          question_id?: string
+          question_text?: string | null
+          time_spent_ms?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_responses_pid_fkey"
+            columns: ["pid"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["pid"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_pid: { Args: never; Returns: string }
     }
     Enums: {
       [_ in never]: never
