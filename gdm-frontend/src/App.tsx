@@ -16,6 +16,11 @@ import Onboarding from "./pages/Onboarding";
 import Auth from "./pages/Auth";
 import Intro from "./pages/Intro";
 import NotFound from "./pages/NotFound";
+import StudyEntry from "./pages/study/Entry";
+import StudySurvey from "./pages/study/Survey";
+import StudyChat from "./pages/study/Chat";
+import StudyDone from "./pages/study/Done";
+import AdminExport from "./pages/admin/Export";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +51,11 @@ const App = () => (
             <Routes>
               <Route path="/intro" element={<Intro />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/study" element={<StudyEntry />} />
+              <Route path="/study/survey" element={<StudySurvey />} />
+              <Route path="/study/chat" element={<StudyChat />} />
+              <Route path="/study/done" element={<StudyDone />} />
+              <Route path="/admin/export" element={<AdminExport />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
                 <Route path="/" element={<Index />} />

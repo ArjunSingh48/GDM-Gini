@@ -8,3 +8,18 @@ verify_jwt = false
 
 [functions.metabolic-insights]
 verify_jwt = false
+
+[functions.study-init]
+verify_jwt = false
+
+[functions.study-survey-save]
+verify_jwt = false
+
+[functions.study-chat]
+verify_jwt = false
+
+[functions.study-complete]
+verify_jwt = false
+
+[functions.admin-export]
+verify_jwt = false
