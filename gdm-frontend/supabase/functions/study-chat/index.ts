@@ -32,6 +32,7 @@ serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const pid = typeof body?.pid === "string" ? body.pid.trim() : "";
+    const userId = typeof body?.user_id === "string" ? body.user_id : null;
     const messages: Msg[] = Array.isArray(body?.messages) ? body.messages : [];
     if (!PID_RE.test(pid)) {
       return new Response(JSON.stringify({ error: "Invalid PID" }), {
@@ -87,6 +88,7 @@ serve(async (req) => {
     try {
       await supabase.from("chat_logs").insert({
         pid,
+        user_id: userId,
         user_query: userQuery,
         bot_response: errorMsg ? `[error: ${errorMsg}] ${reply}` : reply,
       });

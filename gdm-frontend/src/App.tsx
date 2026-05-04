@@ -17,6 +17,9 @@ import Auth from "./pages/Auth";
 import Intro from "./pages/Intro";
 import NotFound from "./pages/NotFound";
 import StudyEntry from "./pages/study/Entry";
+import StudyConsent from "./pages/study/Consent";
+import StudyAuthPage from "./pages/study/StudyAuth";
+import StudyGuard from "./pages/study/StudyGuard";
 import StudySurvey from "./pages/study/Survey";
 import StudyChat from "./pages/study/Chat";
 import StudyDone from "./pages/study/Done";
@@ -52,9 +55,11 @@ const App = () => (
               <Route path="/intro" element={<Intro />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/study" element={<StudyEntry />} />
-              <Route path="/study/survey" element={<StudySurvey />} />
-              <Route path="/study/chat" element={<StudyChat />} />
-              <Route path="/study/done" element={<StudyDone />} />
+              <Route path="/study/consent" element={<StudyConsent />} />
+              <Route path="/study/auth" element={<StudyAuthPage />} />
+              <Route path="/study/survey" element={<StudyGuard><StudySurvey /></StudyGuard>} />
+              <Route path="/study/chat" element={<StudyGuard><StudyChat /></StudyGuard>} />
+              <Route path="/study/done" element={<StudyGuard><StudyDone /></StudyGuard>} />
               <Route path="/admin/export" element={<AdminExport />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>

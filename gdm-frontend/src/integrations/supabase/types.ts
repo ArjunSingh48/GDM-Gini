@@ -41,6 +41,7 @@ export type Database = {
           created_at: string
           id: string
           pid: string
+          user_id: string | null
           user_query: string
         }
         Insert: {
@@ -48,6 +49,7 @@ export type Database = {
           created_at?: string
           id?: string
           pid: string
+          user_id?: string | null
           user_query: string
         }
         Update: {
@@ -55,6 +57,7 @@ export type Database = {
           created_at?: string
           id?: string
           pid?: string
+          user_id?: string | null
           user_query?: string
         }
         Relationships: [
@@ -66,6 +69,30 @@ export type Database = {
             referencedColumns: ["pid"]
           },
         ]
+      }
+      consent_events: {
+        Row: {
+          consent_given: boolean
+          created_at: string
+          id: string
+          pid: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          consent_given: boolean
+          created_at?: string
+          id?: string
+          pid?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          consent_given?: boolean
+          created_at?: string
+          id?: string
+          pid?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
       }
       forum_comments: {
         Row: {
@@ -237,6 +264,7 @@ export type Database = {
           metadata: Json
           pid: string
           session_start: string
+          user_id: string | null
         }
         Insert: {
           auth_user_id?: string | null
@@ -246,6 +274,7 @@ export type Database = {
           metadata?: Json
           pid: string
           session_start?: string
+          user_id?: string | null
         }
         Update: {
           auth_user_id?: string | null
@@ -255,6 +284,7 @@ export type Database = {
           metadata?: Json
           pid?: string
           session_start?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -274,6 +304,7 @@ export type Database = {
           pre_pregnancy_bmi: number | null
           pregnancy_week: number | null
           previous_gdm: boolean | null
+          prolific_pid: string | null
           risk_level: string | null
           updated_at: string | null
           user_id: string
@@ -293,6 +324,7 @@ export type Database = {
           pre_pregnancy_bmi?: number | null
           pregnancy_week?: number | null
           previous_gdm?: boolean | null
+          prolific_pid?: string | null
           risk_level?: string | null
           updated_at?: string | null
           user_id: string
@@ -312,6 +344,7 @@ export type Database = {
           pre_pregnancy_bmi?: number | null
           pregnancy_week?: number | null
           previous_gdm?: boolean | null
+          prolific_pid?: string | null
           risk_level?: string | null
           updated_at?: string | null
           user_id?: string
@@ -344,6 +377,39 @@ export type Database = {
           recommendation?: string
           shown_date?: string
           status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_sessions: {
+        Row: {
+          consent_at: string | null
+          consent_given: boolean
+          id: string
+          metadata: Json
+          pid: string
+          session_end: string | null
+          session_start: string
+          user_id: string
+        }
+        Insert: {
+          consent_at?: string | null
+          consent_given?: boolean
+          id?: string
+          metadata?: Json
+          pid: string
+          session_end?: string | null
+          session_start?: string
+          user_id: string
+        }
+        Update: {
+          consent_at?: string | null
+          consent_given?: boolean
+          id?: string
+          metadata?: Json
+          pid?: string
+          session_end?: string | null
+          session_start?: string
           user_id?: string
         }
         Relationships: []

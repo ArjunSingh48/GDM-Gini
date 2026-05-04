@@ -30,8 +30,8 @@ const Entry = () => {
             screen: `${window.screen.width}x${window.screen.height}`,
             tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
           },
-        });
-        navigate("/study/survey", { replace: true });
+        }).catch(() => {});
+        navigate("/study/consent", { replace: true });
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to start study");
       }

@@ -23,3 +23,9 @@ verify_jwt = false
 
 [functions.admin-export]
 verify_jwt = false
+
+[functions.consent-log]
+verify_jwt = false
+
+[functions.link-pid]
+verify_jwt = false

@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { toast } from "sonner";
 import { getStoredPid } from "@/lib/study/pid";
 import { callFn } from "@/lib/study/network";
+import { supabase } from "@/integrations/supabase/client";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -34,7 +35,8 @@ const StudyChat = () => {
     setMessages((p) => [...p, userMsg]);
     setLoading(true);
     try {
-      const data = await callFn<{ reply: string }>("study-chat", { pid, messages: [...messages, userMsg] });
+      const { data: { session } } = await supabase.auth.getSession();
+      const data = await callFn<{ reply: string }>("study-chat", { pid, user_id: session?.user?.id ?? null, messages: [...messages, userMsg] });
       setMessages((p) => [...p, { role: "assistant", content: data.reply }]);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Chat error");
