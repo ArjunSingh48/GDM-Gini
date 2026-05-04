@@ -10,7 +10,7 @@ const Consent = () => {
   const pid = getStoredPid();
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => { if (!pid) navigate("/study", { replace: true }); }, [pid, navigate]);
+  useEffect(() => { if (!pid) navigate("/", { replace: true }); }, [pid, navigate]);
 
   const log = (consent_given: boolean) =>
     callFn("consent-log", { pid, consent_given }).catch(() => {});

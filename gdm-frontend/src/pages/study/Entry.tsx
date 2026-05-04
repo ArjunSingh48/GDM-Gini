@@ -31,7 +31,7 @@ const Entry = () => {
             tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
           },
         }).catch(() => {});
-        navigate("/study/consent", { replace: true });
+        navigate("/consent", { replace: true });
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to start study");
       }

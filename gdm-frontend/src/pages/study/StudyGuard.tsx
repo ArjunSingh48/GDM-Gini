@@ -20,7 +20,7 @@ const StudyGuard = ({ children }: { children: ReactNode }) => {
     return <div className="min-h-screen flex items-center justify-center bg-background"><span className="text-2xl animate-pulse">🌸</span></div>;
   }
   if (state === "no-pid") return <Navigate to="/study" replace />;
-  if (state === "no-consent") return <Navigate to="/study/consent" replace />;
+  if (state === "no-consent") return <Navigate to="/consent" replace />;
   if (state === "no-auth") return <Navigate to="/study/auth" replace />;
   return <>{children}</>;
 };

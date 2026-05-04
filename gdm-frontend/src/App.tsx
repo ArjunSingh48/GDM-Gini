@@ -24,6 +24,7 @@ import StudySurvey from "./pages/study/Survey";
 import StudyChat from "./pages/study/Chat";
 import StudyDone from "./pages/study/Done";
 import AdminExport from "./pages/admin/Export";
+import PidInterceptor from "./components/study/PidInterceptor";
 
 const queryClient = new QueryClient();
 
@@ -51,11 +52,13 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <PidInterceptor />
             <Routes>
               <Route path="/intro" element={<Intro />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/consent" element={<StudyConsent />} />
               <Route path="/study" element={<StudyEntry />} />
-              <Route path="/study/consent" element={<StudyConsent />} />
+              <Route path="/study/consent" element={<Navigate to="/consent" replace />} />
               <Route path="/study/auth" element={<StudyAuthPage />} />
               <Route path="/study/survey" element={<StudyGuard><StudySurvey /></StudyGuard>} />
               <Route path="/study/chat" element={<StudyGuard><StudyChat /></StudyGuard>} />
