@@ -8,7 +8,6 @@ import { Upload, FileText, X } from "lucide-react";
 const INGEST_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/rag-ingest`;
 
 const RagIngest = () => {
-  const [password, setPassword] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ added: number; total: number } | null>(null);
@@ -25,7 +24,6 @@ const RagIngest = () => {
   const remove = (i: number) => setFiles((prev) => prev.filter((_, idx) => idx !== i));
 
   const upload = async () => {
-    if (!password) return toast.error("Enter the admin password");
     if (files.length === 0) return toast.error("Pick at least one .md file");
     setBusy(true);
     setResult(null);
@@ -36,7 +34,6 @@ const RagIngest = () => {
         method: "POST",
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          "x-admin-password": password,
         },
         body: fd,
       });
@@ -64,17 +61,6 @@ const RagIngest = () => {
         </header>
 
         <div className="bg-card rounded-2xl shadow-soft p-6 space-y-4">
-          <div>
-            <Label htmlFor="pwd">Admin password</Label>
-            <Input
-              id="pwd"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="rounded-xl mt-1"
-            />
-          </div>
-
           <div>
             <Label htmlFor="files">Markdown files</Label>
             <label
