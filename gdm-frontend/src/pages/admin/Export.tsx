@@ -9,16 +9,13 @@ type Dataset = "all" | "survey" | "chat" | "participants";
 type Format = "csv" | "xlsx";
 
 const AdminExport = () => {
-  const [password, setPassword] = useState("");
   const [pidFilter, setPidFilter] = useState("");
   const [busy, setBusy] = useState(false);
 
   const download = async (dataset: Dataset, format: Format) => {
-    if (!password) { toast.error("Enter the admin password"); return; }
     setBusy(true);
     try {
       const resp = await callFnRaw("admin-export", {
-        admin_password: password,
         dataset,
         format,
         pid: pidFilter.trim() || undefined,
@@ -53,10 +50,6 @@ const AdminExport = () => {
         </header>
 
         <div className="bg-card rounded-2xl shadow-soft p-6 space-y-4">
-          <div>
-            <Label htmlFor="pwd">Admin password</Label>
-            <Input id="pwd" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-xl mt-1" />
-          </div>
           <div>
             <Label htmlFor="pid">Filter by PID (optional)</Label>
             <Input id="pid" value={pidFilter} onChange={(e) => setPidFilter(e.target.value)} placeholder="Leave blank for all participants" className="rounded-xl mt-1" />

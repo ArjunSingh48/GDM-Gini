@@ -27,17 +27,9 @@ serve(async (req) => {
 
   try {
     const body = await req.json().catch(() => ({}));
-    const password = typeof body?.admin_password === "string" ? body.admin_password : "";
     const format = body?.format === "xlsx" ? "xlsx" : "csv";
     const dataset = ["survey", "chat", "participants", "all"].includes(body?.dataset) ? body.dataset : "all";
     const pidFilter = typeof body?.pid === "string" && body.pid.trim() ? body.pid.trim() : null;
-
-    const expected = Deno.env.get("ADMIN_EXPORT_PASSWORD") || "";
-    if (!expected || password !== expected) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
