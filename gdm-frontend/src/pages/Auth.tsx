@@ -11,6 +11,7 @@ import { getStoredPid } from "@/lib/study/pid";
 import { hasConsent } from "@/lib/study/consent";
 import { linkPid } from "@/lib/study/auth";
 import { callFn } from "@/lib/study/network";
+import LanguageSwitcher from "@/components/study/LanguageSwitcher";
 
 const CuteGiniSVG = () => (
   <svg width="80" height="80" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,9 +100,10 @@ const Auth = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-6"
+      className="min-h-screen flex flex-col items-center justify-center px-6 relative"
       style={{ background: "linear-gradient(180deg, hsl(60, 20%, 95%) 0%, hsl(340, 40%, 92%) 100%)" }}
     >
+      <LanguageSwitcher className="absolute top-4 right-4 z-10" />
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">

@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.link-pid]
 verify_jwt = false
+
+[functions.rag-ingest]
+verify_jwt = false

@@ -24,6 +24,7 @@ import StudySurvey from "./pages/study/Survey";
 import StudyChat from "./pages/study/Chat";
 import StudyDone from "./pages/study/Done";
 import AdminExport from "./pages/admin/Export";
+import RagIngest from "./pages/admin/RagIngest";
 import PidInterceptor from "./components/study/PidInterceptor";
 
 const queryClient = new QueryClient();
@@ -64,6 +65,7 @@ const App = () => (
               <Route path="/study/chat" element={<StudyGuard><StudyChat /></StudyGuard>} />
               <Route path="/study/done" element={<StudyGuard><StudyDone /></StudyGuard>} />
               <Route path="/admin/export" element={<AdminExport />} />
+              <Route path="/admin/rag" element={<RagIngest />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
                 <Route path="/" element={<Index />} />
