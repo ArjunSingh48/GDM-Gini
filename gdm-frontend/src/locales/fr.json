@@ -458,5 +458,37 @@
     "Hummus & veggies": "Houmous et légumes",
     "Baked salmon": "Saumon au four",
     "Turkey stir-fry": "Sauté de dinde"
+  },
+  "gini": {
+    "title": "Demander à Gini",
+    "greeting": "Salut ! Je suis Gini, ta compagne 🐾 Je peux t'aider avec des questions de nutrition, expliquer les tendances de glycémie, suggérer des repas, et plus. Comment puis-je t'aider aujourd'hui ?",
+    "placeholder": "Pose-moi n'importe quelle question...",
+    "listening": "À l'écoute...",
+    "disclaimer": "À but éducatif uniquement — ne remplace pas un avis médical",
+    "errorReply": "J'ai des problèmes de connexion en ce moment. Réessaie dans un instant ! 🐾",
+    "quickQuestions": [
+      "Que puis-je manger au petit-déjeuner ?",
+      "Comment lire mes valeurs de glycémie ?",
+      "Marcher après les repas aide-t-il ?",
+      "Quels en-cas conviennent au DG ?",
+      "Combien d'eau dois-je boire ?"
+    ]
+  },
+  "surveyReminder": {
+    "title": "Aide-nous à nous améliorer — réponds au sondage 💚",
+    "bodyBefore": "Merci d'avoir exploré l'application ! Prends quelques minutes pour partager tes retours. Tu peux aussi retrouver le sondage dans ",
+    "bodyHighlight": "Profil → Mode Test",
+    "bodyAfter": ".",
+    "take": "Faire le sondage",
+    "later": "Me le rappeler plus tard"
+  },
+  "studyChat": {
+    "header": "Discuter avec l'assistant",
+    "askAtLeast": "Pose au moins {{n}} questions",
+    "finish": "Terminer l'étude →",
+    "placeholder": "Écris ta question…",
+    "welcome": "Salut ! Je suis là pour répondre à tes questions. Pose-moi n'importe quoi — essaie au moins 3 questions avant de terminer.",
+    "errorReply": "J'ai des problèmes en ce moment. Réessaie.",
+    "chatError": "Erreur du chat"
   }
 }

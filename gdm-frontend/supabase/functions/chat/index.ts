@@ -9,9 +9,18 @@ const corsHeaders = {
 const DISCLAIMER = "\n\n_Educational only — does not replace medical advice._";
 const MAX_TURNS = 6; // last 3 user + 3 assistant turns
 
+const LANG_NAMES: Record<string, string> = {
+  en: "English",
+  de: "German",
+  it: "Italian",
+  fr: "French",
+  hi: "Hindi",
+  zh: "Chinese (Simplified)",
+};
+
 type Msg = { role: "user" | "assistant"; content: string };
 
-function buildQuestion(messages: Msg[]): string {
+function buildQuestion(messages: Msg[], language?: string): string {
   const clean = messages.filter(
     (m) => m && typeof m.content === "string" && m.content.trim().length > 0,
   );
@@ -24,13 +33,20 @@ function buildQuestion(messages: Msg[]): string {
 
   const trimmedHistory = history.slice(-MAX_TURNS);
 
-  if (trimmedHistory.length === 0) return currentQuestion;
+  const langCode = (language || "en").split("-")[0].toLowerCase();
+  const langName = LANG_NAMES[langCode] || "English";
+  const langInstruction =
+    langCode === "en"
+      ? ""
+      : `Please respond in ${langName}. Translate any English content in your answer to ${langName}.\n\n`;
+
+  if (trimmedHistory.length === 0) return `${langInstruction}${currentQuestion}`;
 
   const transcript = trimmedHistory
     .map((m) => (m.role === "user" ? `User: ${m.content.trim()}` : `Assistant: ${m.content.trim()}`))
     .join("\n");
 
-  return `Previous conversation:\n${transcript}\n\nCurrent question: ${currentQuestion}`;
+  return `${langInstruction}Previous conversation:\n${transcript}\n\nCurrent question: ${currentQuestion}`;
 }
 
 serve(async (req) => {
@@ -39,6 +55,7 @@ serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const messages: Msg[] = Array.isArray(body?.messages) ? body.messages : [];
+    const language = typeof body?.language === "string" ? body.language : "en";
     if (messages.length === 0) {
       return new Response(JSON.stringify({ error: "messages array is required" }), {
         status: 400,
@@ -51,7 +68,7 @@ serve(async (req) => {
     if (!CUSTOM_LLM_URL) throw new Error("CUSTOM_LLM_URL is not configured");
     if (!CUSTOM_LLM_API_KEY) throw new Error("CUSTOM_LLM_API_KEY is not configured");
 
-    const question = buildQuestion(messages);
+    const question = buildQuestion(messages, language);
     if (!question) {
       return new Response(JSON.stringify({ error: "No user question found in messages" }), {
         status: 400,

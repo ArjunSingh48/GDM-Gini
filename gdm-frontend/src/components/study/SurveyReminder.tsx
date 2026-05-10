@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ClipboardList } from "lucide-react";
@@ -15,6 +16,7 @@ const FIVE_MIN_MS = 5 * 60 * 1000;
 
 const SurveyReminder = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -27,13 +29,13 @@ const SurveyReminder = () => {
     const elapsed = Date.now() - start;
     const remaining = Math.max(0, FIVE_MIN_MS - elapsed);
 
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       if (isSurveyDone() || wasPromptShown()) return;
       markPromptShown();
       setOpen(true);
     }, remaining);
 
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, []);
 
   const goToSurvey = () => {
@@ -49,20 +51,20 @@ const SurveyReminder = () => {
             <ClipboardList className="w-6 h-6 text-primary" />
           </div>
           <DialogTitle className="text-center font-display text-xl">
-            Help us improve — take the survey 💚
+            {t("surveyReminder.title")}
           </DialogTitle>
           <DialogDescription className="text-center pt-2">
-            Thanks for exploring the app! Please take a few minutes to share your
-            feedback. You can also find the survey anytime in your{" "}
-            <strong>Profile → Testing Mode</strong> section.
+            {t("surveyReminder.bodyBefore")}
+            <strong>{t("surveyReminder.bodyHighlight")}</strong>
+            {t("surveyReminder.bodyAfter")}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-2 mt-4">
           <Button onClick={goToSurvey} className="rounded-xl h-11">
-            Take the Survey
+            {t("surveyReminder.take")}
           </Button>
           <Button variant="ghost" onClick={() => setOpen(false)} className="rounded-xl h-10">
-            Remind me later
+            {t("surveyReminder.later")}
           </Button>
         </div>
       </DialogContent>

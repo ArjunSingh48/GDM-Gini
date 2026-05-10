@@ -458,5 +458,37 @@
     "Hummus & veggies": "Hummus & veggies",
     "Baked salmon": "Baked salmon",
     "Turkey stir-fry": "Turkey stir-fry"
+  },
+  "gini": {
+    "title": "Ask Gini",
+    "greeting": "Hi! I'm Gini, your companion 🐾 I can help with nutrition questions, explain glucose trends, suggest meals, and more. How can I help you today?",
+    "placeholder": "Ask me anything...",
+    "listening": "Listening...",
+    "disclaimer": "Educational only — does not replace medical advice",
+    "errorReply": "I'm having trouble connecting right now. Please try again in a moment! 🐾",
+    "quickQuestions": [
+      "What can I eat for breakfast?",
+      "How do I read my glucose numbers?",
+      "Is walking after meals helpful?",
+      "What snacks are GDM-friendly?",
+      "How much water should I drink?"
+    ]
+  },
+  "surveyReminder": {
+    "title": "Help us improve — take the survey 💚",
+    "bodyBefore": "Thanks for exploring the app! Please take a few minutes to share your feedback. You can also find the survey anytime in your ",
+    "bodyHighlight": "Profile → Testing Mode",
+    "bodyAfter": " section.",
+    "take": "Take the Survey",
+    "later": "Remind me later"
+  },
+  "studyChat": {
+    "header": "Chat with the assistant",
+    "askAtLeast": "Ask at least {{n}} questions",
+    "finish": "Finish study →",
+    "placeholder": "Type your question…",
+    "welcome": "Hi! I'm here to answer your questions. Ask me anything you'd like — try at least 3 questions before finishing.",
+    "errorReply": "I'm having trouble right now. Please try again.",
+    "chatError": "Chat error"
   }
 }

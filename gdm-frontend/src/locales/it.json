@@ -458,5 +458,37 @@
     "Hummus & veggies": "Hummus e verdure",
     "Baked salmon": "Salmone al forno",
     "Turkey stir-fry": "Saltata di tacchino"
+  },
+  "gini": {
+    "title": "Chiedi a Gini",
+    "greeting": "Ciao! Sono Gini, la tua compagna 🐾 Posso aiutarti con domande sulla nutrizione, spiegare le tendenze della glicemia, suggerire pasti e altro. Come posso aiutarti oggi?",
+    "placeholder": "Chiedimi qualsiasi cosa...",
+    "listening": "In ascolto...",
+    "disclaimer": "Solo a scopo educativo — non sostituisce il consiglio medico",
+    "errorReply": "Ho problemi di connessione in questo momento. Riprova tra un attimo! 🐾",
+    "quickQuestions": [
+      "Cosa posso mangiare a colazione?",
+      "Come leggo i miei valori di glicemia?",
+      "Camminare dopo i pasti aiuta?",
+      "Quali snack sono adatti al GDM?",
+      "Quanta acqua devo bere?"
+    ]
+  },
+  "surveyReminder": {
+    "title": "Aiutaci a migliorare — partecipa al sondaggio 💚",
+    "bodyBefore": "Grazie per aver esplorato l'app! Dedica qualche minuto a condividere il tuo feedback. Puoi trovare il sondaggio anche nella sezione ",
+    "bodyHighlight": "Profilo → Modalità Test",
+    "bodyAfter": ".",
+    "take": "Vai al sondaggio",
+    "later": "Ricordamelo dopo"
+  },
+  "studyChat": {
+    "header": "Chatta con l'assistente",
+    "askAtLeast": "Fai almeno {{n}} domande",
+    "finish": "Termina lo studio →",
+    "placeholder": "Scrivi la tua domanda…",
+    "welcome": "Ciao! Sono qui per rispondere alle tue domande. Chiedimi qualsiasi cosa — prova a fare almeno 3 domande prima di terminare.",
+    "errorReply": "Ho problemi in questo momento. Riprova.",
+    "chatError": "Errore della chat"
   }
 }

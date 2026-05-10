@@ -458,5 +458,37 @@
     "Hummus & veggies": "鹰嘴豆泥和蔬菜",
     "Baked salmon": "烤三文鱼",
     "Turkey stir-fry": "火鸡炒菜"
+  },
+  "gini": {
+    "title": "问问 Gini",
+    "greeting": "你好！我是 Gini，你的伙伴 🐾 我可以帮你回答营养问题、解释血糖趋势、推荐餐食等等。今天我能怎么帮你？",
+    "placeholder": "问我任何问题...",
+    "listening": "正在聆听...",
+    "disclaimer": "仅供教育用途 — 不能替代医疗建议",
+    "errorReply": "现在连接有点问题。请稍后再试！🐾",
+    "quickQuestions": [
+      "早餐我可以吃什么？",
+      "如何看我的血糖数值？",
+      "餐后散步有帮助吗？",
+      "哪些零食适合妊娠糖尿病？",
+      "我该喝多少水？"
+    ]
+  },
+  "surveyReminder": {
+    "title": "帮助我们改进 — 参与问卷 💚",
+    "bodyBefore": "感谢你体验本应用！请抽几分钟分享你的反馈。你也可以随时在 ",
+    "bodyHighlight": "个人资料 → 测试模式",
+    "bodyAfter": " 中找到问卷。",
+    "take": "参与问卷",
+    "later": "稍后提醒我"
+  },
+  "studyChat": {
+    "header": "与助手聊天",
+    "askAtLeast": "至少提出 {{n}} 个问题",
+    "finish": "结束研究 →",
+    "placeholder": "输入你的问题…",
+    "welcome": "你好！我在这里回答你的问题。问我任何事 — 在结束之前至少提出 3 个问题。",
+    "errorReply": "现在有点问题。请再试一次。",
+    "chatError": "聊天错误"
   }
 }

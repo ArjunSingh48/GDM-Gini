@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -27,22 +28,23 @@ interface GiniChatDialogProps {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
-const quickQuestions = [
-  "What can I eat for breakfast?",
-  "How do I read my glucose numbers?",
-  "Is walking after meals helpful?",
-  "What snacks are GDM-friendly?",
-  "How much water should I drink?",
-];
-
 const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
+  const { t, i18n } = useTranslation();
+  const quickQuestions = useMemo(
+    () => (t("gini.quickQuestions", { returnObjects: true }) as string[]) || [],
+    [t, i18n.language],
+  );
   const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi! I'm Gini, your companion 🐾 I can help with nutrition questions, explain glucose trends, suggest meals, and more. How can I help you today?",
-    },
+    { role: "assistant", content: t("gini.greeting") },
   ]);
+  // Reset greeting when language changes and only greeting is shown
+  useEffect(() => {
+    setMessages((prev) =>
+      prev.length === 1 && prev[0].role === "assistant"
+        ? [{ role: "assistant", content: t("gini.greeting") }]
+        : prev,
+    );
+  }, [i18n.language, t]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
@@ -122,7 +124,10 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ messages: [...messages, userMsg] }),
+        body: JSON.stringify({
+          messages: [...messages, userMsg],
+          language: i18n.resolvedLanguage || i18n.language || "en",
+        }),
       });
 
       const data = await resp.json().catch(() => ({}));
@@ -139,10 +144,7 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
       toast.error(err.message || "Something went wrong");
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: "I'm having trouble connecting right now. Please try again in a moment! 🐾",
-        },
+        { role: "assistant", content: t("gini.errorReply") },
       ]);
     } finally {
       setIsLoading(false);
@@ -155,7 +157,7 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
         <DialogHeader className="p-4 pb-2 border-b border-border shrink-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-display">
             <span className="text-2xl">🐶</span>
-            Ask Gini
+            {t("gini.title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -219,7 +221,7 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={isListening ? "Listening..." : "Ask me anything..."}
+              placeholder={isListening ? t("gini.listening") : t("gini.placeholder")}
               className="flex-1 rounded-xl bg-muted/50 border-0 focus-visible:ring-1"
             />
             {speechSupported && (
@@ -245,7 +247,7 @@ const GiniChatDialog = ({ open, onOpenChange }: GiniChatDialogProps) => {
             </Button>
           </form>
           <p className="text-[10px] text-muted-foreground text-center mt-2">
-            Educational only — does not replace medical advice
+            {t("gini.disclaimer")}
           </p>
         </div>
       </DialogContent>

@@ -458,5 +458,37 @@
     "Hummus & veggies": "Hummus & Gemüse",
     "Baked salmon": "Gebackener Lachs",
     "Turkey stir-fry": "Putenpfanne"
+  },
+  "gini": {
+    "title": "Frage Gini",
+    "greeting": "Hallo! Ich bin Gini, dein Begleiter 🐾 Ich helfe bei Ernährungsfragen, erkläre Glukosewerte, schlage Mahlzeiten vor und mehr. Wie kann ich dir heute helfen?",
+    "placeholder": "Frag mich alles...",
+    "listening": "Höre zu...",
+    "disclaimer": "Nur zu Bildungszwecken — ersetzt keine medizinische Beratung",
+    "errorReply": "Ich habe gerade Verbindungsprobleme. Bitte versuche es gleich nochmal! 🐾",
+    "quickQuestions": [
+      "Was kann ich zum Frühstück essen?",
+      "Wie lese ich meine Glukosewerte?",
+      "Hilft Gehen nach dem Essen?",
+      "Welche Snacks sind GDM-freundlich?",
+      "Wie viel Wasser soll ich trinken?"
+    ]
+  },
+  "surveyReminder": {
+    "title": "Hilf uns besser zu werden — nimm an der Umfrage teil 💚",
+    "bodyBefore": "Danke, dass du die App erkundest! Bitte nimm dir ein paar Minuten Zeit, um dein Feedback zu teilen. Du findest die Umfrage jederzeit unter ",
+    "bodyHighlight": "Profil → Testmodus",
+    "bodyAfter": ".",
+    "take": "Zur Umfrage",
+    "later": "Später erinnern"
+  },
+  "studyChat": {
+    "header": "Chatte mit dem Assistenten",
+    "askAtLeast": "Stelle mindestens {{n}} Fragen",
+    "finish": "Studie beenden →",
+    "placeholder": "Tippe deine Frage…",
+    "welcome": "Hallo! Ich bin hier, um deine Fragen zu beantworten. Frag mich alles — stelle mindestens 3 Fragen, bevor du fertig bist.",
+    "errorReply": "Ich habe gerade Probleme. Bitte versuche es nochmal.",
+    "chatError": "Chat-Fehler"
   }
 }
