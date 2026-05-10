@@ -1,16 +1,18 @@
 import { Home, Leaf, Heart, Users, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { to: "/", icon: Home, label: "Home" },
-  { to: "/nutrition", icon: Leaf, label: "Nutrition" },
-  { to: "/health", icon: Heart, label: "Wellbeing" },
-  { to: "/community", icon: Users, label: "Community" },
-  { to: "/profile", icon: User, label: "Profile" },
-];
-
 const BottomNav = () => {
+  const { t } = useTranslation();
+  const navItems = [
+    { to: "/", icon: Home, label: t("nav.home") },
+    { to: "/nutrition", icon: Leaf, label: t("nav.nutrition") },
+    { to: "/health", icon: Heart, label: t("nav.wellbeing") },
+    { to: "/community", icon: Users, label: t("nav.community") },
+    { to: "/profile", icon: User, label: t("nav.profile") },
+  ];
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border pb-safe">
       <div className="flex items-center justify-around px-2 pt-2 pb-1 max-w-lg mx-auto">

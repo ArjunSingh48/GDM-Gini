@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -54,18 +55,19 @@ const mockComments: Record<number, Comment[]> = {
 };
 
 const Community = () => {
+  const { t } = useTranslation();
   const [selectedArticle, setSelectedArticle] = useState<number | null>(null);
   const [selectedPost, setSelectedPost] = useState<number | null>(null);
 
   return (
     <div className="pt-8 pb-4 animate-fade-in">
-      <h1 className="text-2xl font-display font-bold mb-1">Community</h1>
-      <p className="text-sm text-muted-foreground mb-6">Learn, share, and support each other 🤝</p>
+      <h1 className="text-2xl font-display font-bold mb-1">{t("community.title")}</h1>
+      <p className="text-sm text-muted-foreground mb-6">{t("community.subtitle")}</p>
 
       <Tabs defaultValue="blogs" className="w-full">
         <TabsList className="grid w-full grid-cols-2 rounded-xl bg-muted/50 p-1 h-auto">
-          <TabsTrigger value="blogs" className="rounded-lg text-xs py-2 data-[state=active]:bg-card data-[state=active]:shadow-soft">Blogs</TabsTrigger>
-          <TabsTrigger value="forum" className="rounded-lg text-xs py-2 data-[state=active]:bg-card data-[state=active]:shadow-soft">Forum</TabsTrigger>
+          <TabsTrigger value="blogs" className="rounded-lg text-xs py-2 data-[state=active]:bg-card data-[state=active]:shadow-soft">{t("community.tabBlogs")}</TabsTrigger>
+          <TabsTrigger value="forum" className="rounded-lg text-xs py-2 data-[state=active]:bg-card data-[state=active]:shadow-soft">{t("community.tabForum")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="blogs" className="mt-4">
@@ -99,10 +101,12 @@ const Community = () => {
   );
 };
 
-const ArticleDetail = ({ article, onBack }: { article: (typeof learningArticles)[0]; onBack: () => void }) => (
+const ArticleDetail = ({ article, onBack }: { article: (typeof learningArticles)[0]; onBack: () => void }) => {
+  const { t } = useTranslation();
+  return (
   <div className="animate-fade-in">
     <button onClick={onBack} className="text-xs text-primary font-medium mb-4 hover:underline flex items-center gap-1">
-      <ArrowLeft className="w-3.5 h-3.5" /> Back to articles
+      <ArrowLeft className="w-3.5 h-3.5" /> {t("community.backToArticles")}
     </button>
     <div className="bg-card rounded-2xl p-5 shadow-soft">
       <div className="flex items-center gap-2 mb-3">
@@ -112,21 +116,18 @@ const ArticleDetail = ({ article, onBack }: { article: (typeof learningArticles)
       <h2 className="font-display font-bold text-lg mb-4">{article.title}</h2>
       <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line mb-4">{article.content}</p>
       {article.sourceUrl && (
-        <Button
-          variant="outline"
-          size="sm"
-          className="rounded-xl gap-2 w-full"
-          onClick={() => window.open(article.sourceUrl, '_blank')}
-        >
-          <ExternalLink className="w-3.5 h-3.5" /> Read Source
+        <Button variant="outline" size="sm" className="rounded-xl gap-2 w-full" onClick={() => window.open(article.sourceUrl, '_blank')}>
+          <ExternalLink className="w-3.5 h-3.5" /> {t("community.readSource")}
         </Button>
       )}
     </div>
   </div>
-);
+  );
+};
 
 // ─── Post Detail (Reddit-style) ────────────────────────────
 const PostDetail = ({ post, onBack }: { post: (typeof forumPosts)[0]; onBack: () => void }) => {
+  const { t } = useTranslation();
   const [comments, setComments] = useState<Comment[]>(mockComments[post.id] || []);
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
@@ -175,7 +176,7 @@ const PostDetail = ({ post, onBack }: { post: (typeof forumPosts)[0]; onBack: ()
   return (
     <div className="animate-fade-in space-y-4">
       <button onClick={onBack} className="text-xs text-primary font-medium hover:underline flex items-center gap-1">
-        <ArrowLeft className="w-3.5 h-3.5" /> Back to forum
+        <ArrowLeft className="w-3.5 h-3.5" /> {t("community.backToForum")}
       </button>
 
       {/* Post */}
@@ -204,7 +205,7 @@ const PostDetail = ({ post, onBack }: { post: (typeof forumPosts)[0]; onBack: ()
         <Input
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add a comment..."
+          placeholder={t("community.addComment")}
           className="flex-1 rounded-xl"
           onKeyDown={(e) => e.key === "Enter" && addComment()}
         />
@@ -248,6 +249,7 @@ const CommentCard = ({
   onSubmitReply: (parentId: string) => void;
   depth?: number;
 }) => {
+  const { t } = useTranslation();
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(comment.likes);
 
@@ -268,7 +270,7 @@ const CommentCard = ({
           </button>
           {depth === 0 && (
             <button onClick={() => onReplyClick(comment.id)} className="text-[10px] text-muted-foreground hover:text-foreground">
-              Reply
+              {t("community.reply")}
             </button>
           )}
         </div>
@@ -279,7 +281,7 @@ const CommentCard = ({
           <Input
             value={replyText}
             onChange={(e) => onReplyTextChange(e.target.value)}
-            placeholder="Write a reply..."
+            placeholder={t("community.writeReply")}
             className="flex-1 rounded-lg text-sm h-9"
             onKeyDown={(e) => e.key === "Enter" && onSubmitReply(comment.id)}
           />
@@ -306,27 +308,28 @@ const CommentCard = ({
 };
 
 const ForumSection = ({ onSelectPost }: { onSelectPost: (id: number) => void }) => {
+  const { t } = useTranslation();
   const [showNewPost, setShowNewPost] = useState(false);
 
   return (
     <div className="space-y-4">
       <Button onClick={() => setShowNewPost(!showNewPost)} variant="outline" className="w-full rounded-xl gap-2">
         <Plus className="w-4 h-4" />
-        {showNewPost ? "Cancel" : "New Post"}
+        {showNewPost ? t("common.cancel") : t("community.newPost")}
       </Button>
 
       {showNewPost && (
         <div className="bg-card rounded-2xl p-4 shadow-soft space-y-3 animate-fade-in">
-          <Input placeholder="Post title..." className="rounded-xl" />
-          <Textarea placeholder="Share your thoughts..." className="rounded-xl min-h-[80px]" />
+          <Input placeholder={t("community.postTitle")} className="rounded-xl" />
+          <Textarea placeholder={t("community.shareThoughts")} className="rounded-xl min-h-[80px]" />
           <div className="flex gap-2">
-            {["Meals", "Exercise", "Emotional Support", "Doctor Advice"].map((topic) => (
+            {[t("community.topicMeals"), t("community.topicExercise"), t("community.topicEmotional"), t("community.topicDoctor")].map((topic) => (
               <button key={topic} className="text-[10px] px-2.5 py-1 rounded-full bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
                 {topic}
               </button>
             ))}
           </div>
-          <Button className="w-full rounded-xl" size="sm">Post</Button>
+          <Button className="w-full rounded-xl" size="sm">{t("community.post")}</Button>
         </div>
       )}
 

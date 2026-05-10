@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { tMealName, tWellness } from "@/lib/i18n";
 import { useAuth } from "@/hooks/useAuth";
 import { useDemoAuth } from "@/hooks/useDemoAuth";
 import { useDailyRecommendations } from "@/hooks/useDailyRecommendations";
@@ -27,7 +28,7 @@ const Index = () => {
   const { user } = useAuth();
   const { isDemoMode, demoProfile } = useDemoAuth();
   const [profile, setProfile] = useState<any>(null);
-  const [selectedMeal, setSelectedMeal] = useState<{ meal: Meal; type: string } | null>(null);
+  const [selectedMeal, setSelectedMeal] = useState<{ meal: Meal; typeKey: string } | null>(null);
 
   const greeting = () => {
     const hour = new Date().getHours();
@@ -75,6 +76,8 @@ const Index = () => {
     { type: t("home.lunch"), key: "lunch" as const, meal: meals.lunch },
     { type: t("home.dinner"), key: "dinner" as const, meal: meals.dinner },
   ];
+
+  const localizedMealName = (m: Meal | null) => (m ? tMealName(m.name) : t("common.loading"));
 
   return (
     <div className="pt-4 pb-4 animate-fade-in">
@@ -159,7 +162,7 @@ const Index = () => {
           {mealEntries.map((entry, i) => (
             <button
               key={entry.key}
-              onClick={() => entry.meal && setSelectedMeal({ meal: entry.meal, type: entry.type })}
+              onClick={() => entry.meal && setSelectedMeal({ meal: entry.meal, typeKey: entry.key })}
               className={`w-full text-left ${i < mealEntries.length - 1 ? "pb-3 border-b border-border" : ""}`}
             >
               <div className="flex items-center justify-between">
@@ -167,7 +170,7 @@ const Index = () => {
                   <span className="text-lg">{mealTypeEmoji[entry.key]}</span>
                   <div>
                     <p className="text-xs font-bold text-coral">{entry.type}</p>
-                    <p className="text-sm text-foreground">{entry.meal?.name || t("common.loading")}</p>
+                    <p className="text-sm text-foreground">{localizedMealName(entry.meal)}</p>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
@@ -183,9 +186,9 @@ const Index = () => {
         </h3>
         <div className="space-y-2">
           {[
-            { emoji: wellnessEmojis.do, text: wellness.do },
-            { emoji: wellnessEmojis.eat, text: wellness.eat },
-            { emoji: wellnessEmojis.relax, text: wellness.relax },
+            { emoji: wellnessEmojis.do, text: tWellness("do", wellness.do) },
+            { emoji: wellnessEmojis.eat, text: tWellness("eat", wellness.eat) },
+            { emoji: wellnessEmojis.relax, text: tWellness("relax", wellness.relax) },
           ].filter(w => w.text).map((item, i) => (
             <div key={i} className="flex items-center gap-3 bg-muted/50 rounded-xl px-4 py-3">
               <span className="text-lg">{item.emoji}</span>
@@ -205,7 +208,7 @@ const Index = () => {
             <>
               <DialogHeader>
                 <DialogTitle className="font-display text-lg">
-                  {mealTypeEmoji[selectedMeal.type.toLowerCase()]} {selectedMeal.meal.name}
+                  {mealTypeEmoji[selectedMeal.typeKey]} {tMealName(selectedMeal.meal.name)}
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">

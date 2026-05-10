@@ -37,6 +37,41 @@ i18n
 
 export default i18n;
 
+// ---- Translation helpers for dynamic content ----
+// Each helper looks up a key under a namespace; falls back to the English source.
+export const tFocusTask = (id: number): string => {
+  const key = `focus.tasks.${id}`;
+  const v = i18n.t(key);
+  return v === key ? "" : v;
+};
+
+export const tFocusCategoryLabel = (cat: string): string => {
+  const key = `focus.category.${cat}`;
+  const v = i18n.t(key);
+  return v === key ? cat.replace("_", " ") : v;
+};
+
+export const tFocusCategoryDesc = (cat: string): string => {
+  const key = `focus.desc.${cat}`;
+  const v = i18n.t(key);
+  return v === key ? "" : v;
+};
+
+export const tWellness = (kind: "do" | "eat" | "relax", englishText: string): string => {
+  // map english text -> index via the English locale
+  const enList = (en as any).wellnessItems?.[kind] || {};
+  const idx = Object.entries(enList).find(([, val]) => val === englishText)?.[0];
+  if (idx === undefined) return englishText;
+  const key = `wellnessItems.${kind}.${idx}`;
+  const v = i18n.t(key);
+  return v === key ? englishText : v;
+};
+
+export const tMealName = (name: string): string => {
+  const v = i18n.t(`mealNames.${name}`);
+  return v === `mealNames.${name}` ? name : v;
+};
+
 export const LANGUAGES = [
   { code: "en", label: "English" },
   { code: "de", label: "Deutsch" },

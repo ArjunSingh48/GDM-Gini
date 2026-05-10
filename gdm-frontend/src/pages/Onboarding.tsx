@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-
-const steps = [
-  { title: "About You", subtitle: "A few personal details" },
-  { title: "Your Pregnancy", subtitle: "Tell us about your journey" },
-  { title: "Your Metabolic Care Plan ✨", subtitle: "" },
-];
 
 const CuteGiniSVG = () => (
   <svg width="80" height="80" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,16 +32,11 @@ const CuteGiniSVG = () => (
 );
 
 const Onboarding = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const [step, setStep] = useState(0);
-  const [data, setData] = useState({
-    name: "",
-    age: "",
-    preBMI: "",
-    pregnancyWeek: "",
-    fastingGlucose: "",
-  });
+  const [data, setData] = useState({ name: "", age: "", preBMI: "", pregnancyWeek: "", fastingGlucose: "" });
 
   const calculateRisk = () => {
     let score = 0;
@@ -62,27 +52,15 @@ const Onboarding = () => {
   const risk = step === 2 ? calculateRisk() : "";
 
   const riskLabels: Record<string, string> = {
-    Low: "Low — Looking Great",
-    Moderate: "Moderate — Monitor Closely",
-    Elevated: "Elevated — Extra Support",
+    Low: t("onboarding.riskLow"),
+    Moderate: t("onboarding.riskModerate"),
+    Elevated: t("onboarding.riskElevated"),
   };
 
   const focusAreas: Record<string, string[]> = {
-    Low: [
-      "Maintain your balanced eating habits",
-      "Include a 10-minute walk after meals",
-      "Continue regular prenatal checkups",
-    ],
-    Moderate: [
-      "Follow a structured meal plan with carb distribution",
-      "Check fasting and post-meal glucose daily",
-      "10–15 minute walks after each main meal",
-    ],
-    Elevated: [
-      "Pair every carbohydrate with a protein source",
-      "Consider smaller, more frequent meals",
-      "Regular glucose monitoring to understand patterns",
-    ],
+    Low: [t("onboarding.lowFocus1"), t("onboarding.lowFocus2"), t("onboarding.lowFocus3")],
+    Moderate: [t("onboarding.moderateFocus1"), t("onboarding.moderateFocus2"), t("onboarding.moderateFocus3")],
+    Elevated: [t("onboarding.elevatedFocus1"), t("onboarding.elevatedFocus2"), t("onboarding.elevatedFocus3")],
   };
 
   const canProceed = () => {
@@ -109,144 +87,63 @@ const Onboarding = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center px-6 py-12"
-      style={{ background: "linear-gradient(180deg, hsl(60, 20%, 95%) 0%, hsl(0, 50%, 92%) 100%)" }}
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12" style={{ background: "linear-gradient(180deg, hsl(60, 20%, 95%) 0%, hsl(0, 50%, 92%) 100%)" }}>
       <div className="w-full max-w-sm">
-        {/* Gini Avatar */}
         <div className="flex justify-center mb-4">
-          <div className="animate-gini-float">
-            <CuteGiniSVG />
-          </div>
+          <div className="animate-gini-float"><CuteGiniSVG /></div>
         </div>
 
-        {/* Progress dots - 4 dots, first is intro (done), then 3 steps */}
         <div className="flex gap-2 justify-center mb-6">
           {[0, 1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i <= step + 1 ? "bg-primary w-8" : "bg-primary/20 w-4"
-              }`}
-            />
+            <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i <= step + 1 ? "bg-primary w-8" : "bg-primary/20 w-4"}`} />
           ))}
         </div>
 
-        {/* Step Content */}
         <div className="animate-fade-in" key={step}>
           {step === 0 && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (canProceed()) setStep(step + 1);
-              }}
-            >
-              <h1 className="text-2xl font-display font-bold mb-1">{steps[0].title}</h1>
-              <p className="text-sm text-muted-foreground mb-6">{steps[0].subtitle}</p>
-
+            <form onSubmit={(e) => { e.preventDefault(); if (canProceed()) setStep(step + 1); }}>
+              <h1 className="text-2xl font-display font-bold mb-1">{t("onboarding.step1Title")}</h1>
+              <p className="text-sm text-muted-foreground mb-6">{t("onboarding.step1Subtitle")}</p>
               <div className="space-y-5">
                 <div>
-                  <Label className="text-sm font-semibold">What's your name?</Label>
-                  <Input
-                    autoFocus
-                    value={data.name}
-                    onChange={(e) => setData({ ...data, name: e.target.value })}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        (e.currentTarget.closest("form")?.querySelector('[data-field="age"]') as HTMLInputElement | null)?.focus();
-                      }
-                    }}
-                    placeholder="Mama"
-                    className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
-                  />
+                  <Label className="text-sm font-semibold">{t("onboarding.nameQuestion")}</Label>
+                  <Input autoFocus value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} placeholder={t("onboarding.namePlaceholder")} className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12" />
                 </div>
                 <div>
-                  <Label className="text-sm font-semibold">Your age</Label>
-                  <Input
-                    data-field="age"
-                    type="number"
-                    value={data.age}
-                    onChange={(e) => setData({ ...data, age: e.target.value })}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        (e.currentTarget.closest("form")?.querySelector('[data-field="bmi"]') as HTMLInputElement | null)?.focus();
-                      }
-                    }}
-                    placeholder="32"
-                    className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
-                  />
+                  <Label className="text-sm font-semibold">{t("onboarding.ageQuestion")}</Label>
+                  <Input data-field="age" type="number" value={data.age} onChange={(e) => setData({ ...data, age: e.target.value })} placeholder="32" className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12" />
                 </div>
                 <div>
-                  <Label className="text-sm font-semibold">Pre-pregnancy BMI (optional)</Label>
-                  <Input
-                    data-field="bmi"
-                    type="number"
-                    step="0.1"
-                    value={data.preBMI}
-                    onChange={(e) => setData({ ...data, preBMI: e.target.value })}
-                    placeholder="24"
-                    className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
-                  />
+                  <Label className="text-sm font-semibold">{t("onboarding.bmiQuestion")}</Label>
+                  <Input data-field="bmi" type="number" step="0.1" value={data.preBMI} onChange={(e) => setData({ ...data, preBMI: e.target.value })} placeholder="24" className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12" />
                 </div>
               </div>
-              <button type="submit" className="hidden" aria-hidden />
             </form>
           )}
 
           {step === 1 && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (canProceed()) setStep(step + 1);
-              }}
-            >
-              <h1 className="text-2xl font-display font-bold mb-1">{steps[1].title}</h1>
-              <p className="text-sm text-muted-foreground mb-6">{steps[1].subtitle}</p>
-
+            <form onSubmit={(e) => { e.preventDefault(); if (canProceed()) setStep(step + 1); }}>
+              <h1 className="text-2xl font-display font-bold mb-1">{t("onboarding.step2Title")}</h1>
+              <p className="text-sm text-muted-foreground mb-6">{t("onboarding.step2Subtitle")}</p>
               <div className="space-y-5">
                 <div>
-                  <Label className="text-sm font-semibold">Current week of pregnancy</Label>
-                  <Input
-                    autoFocus
-                    type="number"
-                    value={data.pregnancyWeek}
-                    onChange={(e) => setData({ ...data, pregnancyWeek: e.target.value })}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        (e.currentTarget.closest("form")?.querySelector('[data-field="glucose"]') as HTMLInputElement | null)?.focus();
-                      }
-                    }}
-                    placeholder="36"
-                    className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
-                  />
+                  <Label className="text-sm font-semibold">{t("onboarding.weekQuestion")}</Label>
+                  <Input autoFocus type="number" value={data.pregnancyWeek} onChange={(e) => setData({ ...data, pregnancyWeek: e.target.value })} placeholder="36" className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12" />
                 </div>
                 <div>
-                  <Label className="text-sm font-semibold">Fasting glucose (mg/dL) — optional</Label>
-                  <Input
-                    data-field="glucose"
-                    type="number"
-                    value={data.fastingGlucose}
-                    onChange={(e) => setData({ ...data, fastingGlucose: e.target.value })}
-                    placeholder="90"
-                    className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1.5">Normal fasting range: 70–92 mg/dL</p>
+                  <Label className="text-sm font-semibold">{t("onboarding.glucoseQuestion")}</Label>
+                  <Input type="number" value={data.fastingGlucose} onChange={(e) => setData({ ...data, fastingGlucose: e.target.value })} placeholder="90" className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12" />
+                  <p className="text-xs text-muted-foreground mt-1.5">{t("onboarding.glucoseHint")}</p>
                 </div>
               </div>
-              <button type="submit" className="hidden" aria-hidden />
             </form>
           )}
 
           {step === 2 && (
             <div className="text-center animate-scale-in">
-              <h1 className="text-2xl font-display font-bold mb-1">{steps[2].title}</h1>
-              <p className="text-sm text-muted-foreground mb-6">Personalized for {data.name || "you"}</p>
+              <h1 className="text-2xl font-display font-bold mb-1">{t("onboarding.step3Title")}</h1>
+              <p className="text-sm text-muted-foreground mb-6">{t("onboarding.personalizedFor", { name: data.name || t("onboarding.you") })}</p>
 
-              {/* Risk Card */}
               <div className={`rounded-2xl p-5 mb-6 ${risk === "Low" ? "bg-green-range/10" : risk === "Moderate" ? "bg-amber-watch/10" : "bg-coral/10"}`}>
                 <div className="flex items-center gap-2 justify-center mb-1">
                   <span>🌸</span>
@@ -254,56 +151,39 @@ const Onboarding = () => {
                     {riskLabels[risk]}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Based on your health history — always confirm with your doctor.</p>
+                <p className="text-xs text-muted-foreground">{t("onboarding.riskBased")}</p>
               </div>
 
-              {/* Focus Areas */}
               <div className="text-left mb-6">
-                <h3 className="font-bold text-sm mb-3">Your 3 Focus Areas:</h3>
+                <h3 className="font-bold text-sm mb-3">{t("onboarding.focusAreas")}</h3>
                 <div className="space-y-3">
                   {focusAreas[risk]?.map((area, i) => (
                     <div key={i} className="flex items-center gap-3 bg-card/80 backdrop-blur-sm rounded-2xl px-4 py-4 shadow-soft">
-                      <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
-                        i === 0 ? "bg-green-range/20 text-green-range" : i === 1 ? "bg-amber-watch/20 text-amber-watch" : "bg-coral/20 text-coral"
-                      }`}>{i + 1}</span>
+                      <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${i === 0 ? "bg-green-range/20 text-green-range" : i === 1 ? "bg-amber-watch/20 text-amber-watch" : "bg-coral/20 text-coral"}`}>{i + 1}</span>
                       <span className="text-sm text-foreground">{area}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <p className="text-xs text-muted-foreground mb-4">
-                Progress, not perfection. Every small step counts. 💚
-              </p>
+              <p className="text-xs text-muted-foreground mb-4">{t("onboarding.progressNote")}</p>
             </div>
           )}
         </div>
 
-        {/* Navigation */}
         <div className="mt-6 flex gap-3">
           {step > 0 && step < 2 && (
-            <Button
-              variant="outline"
-              onClick={() => setStep(step - 1)}
-              className="rounded-2xl bg-card/80 border-0 shadow-soft h-12 px-5"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" /> Back
+            <Button variant="outline" onClick={() => setStep(step - 1)} className="rounded-2xl bg-card/80 border-0 shadow-soft h-12 px-5">
+              <ChevronLeft className="w-4 h-4 mr-1" /> {t("common.back")}
             </Button>
           )}
           {step < 2 ? (
-            <Button
-              onClick={() => setStep(step + 1)}
-              disabled={!canProceed()}
-              className="flex-1 rounded-2xl h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-soft"
-            >
-              Continue <ChevronRight className="w-4 h-4 ml-1" />
+            <Button onClick={() => setStep(step + 1)} disabled={!canProceed()} className="flex-1 rounded-2xl h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-soft">
+              {t("common.continue")} <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           ) : (
-            <Button
-              onClick={handleFinish}
-              className="flex-1 rounded-2xl h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-soft"
-            >
-              Open My Dashboard 💚
+            <Button onClick={handleFinish} className="flex-1 rounded-2xl h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-soft">
+              {t("onboarding.openDashboard")}
             </Button>
           )}
         </div>

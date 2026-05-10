@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Check, Shuffle, X, ArrowLeft, Settings2 } from "lucide-react";
 import MealCheckTab from "@/components/nutrition/MealCheckTab";
+import { tMealName } from "@/lib/i18n";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const tabs = ["Meal Plan", "Cultural", "Build My Plate", "Grocery List", "Meal Check"];
+
 
 const mealRecipes: Record<string, { ingredients: string[]; steps: string[]; prepTime: string; cookTime: string; macros: { carbs: number; protein: number; fat: number; fiber: number } }> = {
   "Veggie egg scramble": {
@@ -115,6 +117,8 @@ const preferenceOptions = [
 ];
 
 const Nutrition = () => {
+  const { t } = useTranslation();
+  const tabs = [t("nutrition.tabMealPlan"), t("nutrition.tabCultural"), t("nutrition.tabBuildPlate"), t("nutrition.tabGrocery"), t("nutrition.tabMealCheck")];
   const [activeTab, setActiveTab] = useState(0);
   const [showPreferenceDialog, setShowPreferenceDialog] = useState(false);
   const [preferences, setPreferences] = useState<string[]>(() => {
@@ -148,15 +152,15 @@ const Nutrition = () => {
           <button onClick={() => setShowPreferenceDialog(true)} className="text-muted-foreground hover:text-foreground transition-colors">
             <Settings2 className="w-4 h-4" />
           </button>
-          <span className="text-xs text-muted-foreground border border-border rounded-full px-3 py-1">Educational only</span>
+          <span className="text-xs text-muted-foreground border border-border rounded-full px-3 py-1">{t("common.educationalOnly")}</span>
         </div>
       </div>
       <div className="border-b border-border mb-4" />
 
       <h1 className="text-2xl font-display font-bold mb-1 flex items-center gap-2">
-        <span>🌿</span> Nutrition Guide
+        <span>🌿</span> {t("nutrition.title")}
       </h1>
-      <p className="text-sm text-muted-foreground mb-4">Low-GI meal plan tailored for GDM</p>
+      <p className="text-sm text-muted-foreground mb-4">{t("nutrition.subtitle")}</p>
 
       {/* Preferences display */}
       {preferences.length > 0 && !preferences.includes("No Preference") && (
