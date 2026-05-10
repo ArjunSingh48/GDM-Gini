@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { useDemoAuth } from "@/hooks/useDemoAuth";
 import { useDailyRecommendations } from "@/hooks/useDailyRecommendations";
@@ -8,17 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Leaf, Heart, Users, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { Meal } from "@/data/dailyContent";
-
-const greetings = () => {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-  return "Good evening";
-};
-
-const todayDate = () => {
-  return new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
-};
 
 const mealTypeEmoji: Record<string, string> = {
   breakfast: "🌅",
@@ -33,10 +23,20 @@ const wellnessEmojis = {
 };
 
 const Index = () => {
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { isDemoMode, demoProfile } = useDemoAuth();
   const [profile, setProfile] = useState<any>(null);
   const [selectedMeal, setSelectedMeal] = useState<{ meal: Meal; type: string } | null>(null);
+
+  const greeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return t("home.goodMorning");
+    if (hour < 17) return t("home.goodAfternoon");
+    return t("home.goodEvening");
+  };
+
+  const todayDate = () => new Date().toLocaleDateString(i18n.language, { weekday: "long", month: "long", day: "numeric" });
 
   const {
     focus,
@@ -46,7 +46,6 @@ const Index = () => {
     wellness,
     markFocusDone,
     markFocusSkipped,
-    loading: recsLoading,
   } = useDailyRecommendations();
 
   useEffect(() => {
@@ -64,64 +63,60 @@ const Index = () => {
   const pregnancyWeek = profile?.pregnancy_week;
 
   const riskDisplay: Record<string, { label: string; color: string; bg: string }> = {
-    low: { label: "Low Risk", color: "text-green-range", bg: "bg-green-range/15" },
-    moderate: { label: "Moderate", color: "text-amber-watch", bg: "bg-amber-watch/15" },
-    elevated: { label: "Elevated", color: "text-coral", bg: "bg-coral/15" },
+    low: { label: t("home.lowRisk"), color: "text-green-range", bg: "bg-green-range/15" },
+    moderate: { label: t("home.moderate"), color: "text-amber-watch", bg: "bg-amber-watch/15" },
+    elevated: { label: t("home.elevated"), color: "text-coral", bg: "bg-coral/15" },
   };
 
   const risk = riskDisplay[riskLevel] || riskDisplay.moderate;
 
   const mealEntries = [
-    { type: "Breakfast", key: "breakfast" as const, meal: meals.breakfast },
-    { type: "Lunch", key: "lunch" as const, meal: meals.lunch },
-    { type: "Dinner", key: "dinner" as const, meal: meals.dinner },
+    { type: t("home.breakfast"), key: "breakfast" as const, meal: meals.breakfast },
+    { type: t("home.lunch"), key: "lunch" as const, meal: meals.lunch },
+    { type: t("home.dinner"), key: "dinner" as const, meal: meals.dinner },
   ];
 
   return (
     <div className="pt-4 pb-4 animate-fade-in">
-      {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-2xl">🐶</span>
-          <span className="font-display font-bold text-base">GDM Guide</span>
+          <span className="font-display font-bold text-base">{t("common.appName")}</span>
         </div>
         <div className="flex items-center gap-2">
           {isDemoMode && (
-            <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-accent/40 text-accent-foreground">Demo</span>
+            <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-accent/40 text-accent-foreground">{t("common.demo")}</span>
           )}
-          <span className="text-xs text-muted-foreground border border-border rounded-full px-3 py-1">Educational only</span>
+          <span className="text-xs text-muted-foreground border border-border rounded-full px-3 py-1">{t("common.educationalOnly")}</span>
         </div>
       </div>
 
       <div className="border-b border-border mb-4" />
 
-      {/* Greeting */}
       <div className="mb-4">
         <p className="text-xs text-muted-foreground">{todayDate()}</p>
         <h1 className="text-2xl font-display font-bold text-foreground">
-          {greetings()}, {name} 🌸
+          {greeting()}, {name} 🌸
         </h1>
         {pregnancyWeek && (
-          <p className="text-sm text-muted-foreground">Week {pregnancyWeek} of your pregnancy</p>
+          <p className="text-sm text-muted-foreground">{t("home.weekOf", { week: pregnancyWeek })}</p>
         )}
       </div>
 
-      {/* Care Plan Card */}
       <div className={`${risk.bg} rounded-2xl p-4 mb-4 flex items-center justify-between`}>
         <div className="flex items-center gap-3">
           <span className="text-xl">🐶</span>
           <div>
-            <p className="text-xs text-muted-foreground">Your care plan</p>
+            <p className="text-xs text-muted-foreground">{t("home.yourCarePlan")}</p>
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${risk.bg} ${risk.color}`}>{risk.label}</span>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xs text-muted-foreground">Last fasting</p>
-          <p className="text-xs text-foreground font-medium">{isDemoMode ? "88 mg/dL" : "No entries yet"}</p>
+          <p className="text-xs text-muted-foreground">{t("home.lastFasting")}</p>
+          <p className="text-xs text-foreground font-medium">{isDemoMode ? "88 mg/dL" : t("home.noEntries")}</p>
         </div>
       </div>
 
-      {/* Today's Focus — Single Dynamic Card */}
       <DailyFocus
         focus={focus}
         description={focusDescription}
@@ -130,37 +125,35 @@ const Index = () => {
         onSkip={markFocusSkipped}
       />
 
-      {/* Quick Action Grid */}
       <div className="grid grid-cols-2 gap-3 my-4">
         <Link to="/nutrition" className="bg-green-range/15 rounded-2xl p-4 hover:shadow-soft transition-all active:scale-[0.98]">
           <Leaf className="w-6 h-6 text-green-range mb-2" />
-          <h3 className="font-display font-bold text-sm">Meal Guide</h3>
-          <p className="text-xs text-muted-foreground">Today's suggestions</p>
+          <h3 className="font-display font-bold text-sm">{t("home.mealGuide")}</h3>
+          <p className="text-xs text-muted-foreground">{t("home.todaySuggestions")}</p>
         </Link>
         <Link to="/health" className="bg-secondary/40 rounded-2xl p-4 hover:shadow-soft transition-all active:scale-[0.98]">
           <Heart className="w-6 h-6 text-coral mb-2" />
-          <h3 className="font-display font-bold text-sm">Wellbeing</h3>
-          <p className="text-xs text-muted-foreground">Track your levels</p>
+          <h3 className="font-display font-bold text-sm">{t("home.wellbeing")}</h3>
+          <p className="text-xs text-muted-foreground">{t("home.trackLevels")}</p>
         </Link>
         <Link to="/community" className="bg-accent/30 rounded-2xl p-4 hover:shadow-soft transition-all active:scale-[0.98]">
           <Users className="w-6 h-6 text-accent-foreground mb-2" />
-          <h3 className="font-display font-bold text-sm">Community</h3>
-          <p className="text-xs text-muted-foreground">Learn & connect</p>
+          <h3 className="font-display font-bold text-sm">{t("home.community")}</h3>
+          <p className="text-xs text-muted-foreground">{t("home.learnConnect")}</p>
         </Link>
         <button onClick={() => document.querySelector<HTMLButtonElement>('[aria-label="Talk to Gini"]')?.click()} className="bg-card border border-border rounded-2xl p-4 hover:shadow-soft transition-all active:scale-[0.98] text-left">
           <span className="text-2xl block mb-2">💬</span>
-          <h3 className="font-display font-bold text-sm">Ask Gini</h3>
-          <p className="text-xs text-muted-foreground">Get guidance</p>
+          <h3 className="font-display font-bold text-sm">{t("home.askGini")}</h3>
+          <p className="text-xs text-muted-foreground">{t("home.getGuidance")}</p>
         </button>
       </div>
 
-      {/* Today's Meals — Dynamic */}
       <div className="bg-card rounded-2xl p-4 shadow-soft mb-4 border border-border">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-display font-bold text-sm flex items-center gap-2">
-            <span>🌿</span> Today's Meals
+            <span>🌿</span> {t("home.todaysMeals")}
           </h3>
-          <Link to="/nutrition" className="text-xs text-primary font-medium">See all &gt;</Link>
+          <Link to="/nutrition" className="text-xs text-primary font-medium">{t("home.seeAll")} &gt;</Link>
         </div>
         <div className="space-y-3">
           {mealEntries.map((entry, i) => (
@@ -174,7 +167,7 @@ const Index = () => {
                   <span className="text-lg">{mealTypeEmoji[entry.key]}</span>
                   <div>
                     <p className="text-xs font-bold text-coral">{entry.type}</p>
-                    <p className="text-sm text-foreground">{entry.meal?.name || "Loading..."}</p>
+                    <p className="text-sm text-foreground">{entry.meal?.name || t("common.loading")}</p>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
@@ -184,10 +177,9 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Wellness Reminders — Dynamic */}
       <div className="bg-card rounded-2xl p-4 shadow-soft border border-border mb-4">
         <h3 className="font-display font-bold text-sm flex items-center gap-2 mb-3">
-          <span>✨</span> Wellness Reminders
+          <span>✨</span> {t("home.wellnessReminders")}
         </h3>
         <div className="space-y-2">
           {[
@@ -204,10 +196,9 @@ const Index = () => {
       </div>
 
       <p className="text-xs text-center text-muted-foreground mt-2">
-        You are supporting both you and your baby. 💚
+        {t("home.supportingBoth")}
       </p>
 
-      {/* Meal Recipe Dialog */}
       <Dialog open={!!selectedMeal} onOpenChange={() => setSelectedMeal(null)}>
         <DialogContent className="sm:max-w-md rounded-2xl max-h-[85vh] overflow-y-auto">
           {selectedMeal && (
@@ -218,14 +209,11 @@ const Index = () => {
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
-                {/* Benefit */}
                 <div className="bg-primary/10 rounded-xl p-3">
                   <p className="text-xs text-primary font-medium">🌿 {selectedMeal.meal.benefit}</p>
                 </div>
-
-                {/* Ingredients */}
                 <div>
-                  <h4 className="font-display font-semibold text-sm mb-2">Ingredients</h4>
+                  <h4 className="font-display font-semibold text-sm mb-2">{t("home.ingredients")}</h4>
                   <div className="space-y-1.5">
                     {selectedMeal.meal.ingredients.map((ing, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
@@ -235,10 +223,8 @@ const Index = () => {
                     ))}
                   </div>
                 </div>
-
-                {/* Recipe Steps */}
                 <div>
-                  <h4 className="font-display font-semibold text-sm mb-2">Recipe</h4>
+                  <h4 className="font-display font-semibold text-sm mb-2">{t("home.recipe")}</h4>
                   <div className="space-y-2">
                     {selectedMeal.meal.recipe.map((step, i) => (
                       <div key={i} className="flex gap-3 text-sm">
