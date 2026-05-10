@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,6 +39,7 @@ const CuteGiniSVG = () => (
 
 const Auth = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { enterDemoMode } = useDemoAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
@@ -94,7 +96,7 @@ const Auth = () => {
 
   const handleDemoLogin = () => {
     enterDemoMode();
-    toast.success("Welcome to demo mode! 🌸");
+    toast.success(t("auth.demoWelcome"));
     navigate("/onboarding");
   };
 
@@ -112,29 +114,29 @@ const Auth = () => {
             </div>
           </div>
           <h1 className="text-2xl font-display font-bold mb-1">
-            {isLogin ? "Welcome back 🌿" : "Join us 🌿"}
+            {isLogin ? t("auth.welcomeBack") : t("auth.joinUs")}
           </h1>
           <p className="text-sm text-muted-foreground">
-            {isLogin ? "Continue your wellness journey" : "Start your supportive pregnancy companion"}
+            {isLogin ? t("auth.continueJourney") : t("auth.startCompanion")}
           </p>
         </div>
 
         <form onSubmit={handleAuth} className="space-y-4">
           {!isLogin && (
             <div>
-              <Label className="text-sm font-semibold">Name</Label>
+              <Label className="text-sm font-semibold">{t("auth.name")}</Label>
               <Input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
+                placeholder={t("auth.namePlaceholder")}
                 className="mt-2 rounded-2xl bg-card/80 border-0 shadow-soft h-12"
                 required
               />
             </div>
           )}
           <div>
-            <Label className="text-sm font-semibold">Email</Label>
+            <Label className="text-sm font-semibold">{t("auth.email")}</Label>
             <Input
               type="email"
               value={email}
@@ -145,7 +147,7 @@ const Auth = () => {
             />
           </div>
           <div>
-            <Label className="text-sm font-semibold">Password</Label>
+            <Label className="text-sm font-semibold">{t("auth.password")}</Label>
             <div className="relative">
               <Input
                 type={showPassword ? "text" : "password"}
@@ -167,7 +169,7 @@ const Auth = () => {
           </div>
 
           <Button type="submit" className="w-full rounded-2xl h-12 font-semibold" disabled={loading}>
-            {loading ? "Please wait..." : isLogin ? "Sign In" : "Create Account"}
+            {loading ? t("auth.pleaseWait") : isLogin ? t("auth.signIn") : t("auth.createAccount")}
             {!loading && <ChevronRight className="w-4 h-4 ml-1" />}
           </Button>
         </form>
@@ -175,7 +177,7 @@ const Auth = () => {
         {/* Divider */}
         <div className="flex items-center gap-3 my-5">
           <div className="flex-1 h-px bg-border" />
-          <span className="text-xs text-muted-foreground">or</span>
+          <span className="text-xs text-muted-foreground">{t("auth.or")}</span>
           <div className="flex-1 h-px bg-border" />
         </div>
 
@@ -186,18 +188,18 @@ const Auth = () => {
           className="w-full rounded-2xl h-12 font-semibold bg-card/60 border-border hover:bg-card shadow-soft gap-2"
         >
           <span className="text-lg">🐶</span>
-          Try Demo — No Sign Up Needed
+          {t("auth.tryDemo")}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground mt-5">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+          {isLogin ? t("auth.noAccount") : t("auth.haveAccount")}{" "}
           <button onClick={() => setIsLogin(!isLogin)} className="text-primary font-semibold hover:underline">
-            {isLogin ? "Sign up" : "Sign in"}
+            {isLogin ? t("auth.signUp") : t("auth.signIn")}
           </button>
         </p>
 
         <p className="text-xs text-center text-muted-foreground mt-4">
-          Educational guidance only — not a substitute for medical care.
+          {t("auth.educationalDisclaimer")}
         </p>
       </div>
     </div>

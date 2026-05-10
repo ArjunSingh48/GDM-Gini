@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,9 +14,26 @@ interface Props {
   className?: string;
 }
 
+const normalize = (lng?: string) => (lng || "en").split("-")[0].toLowerCase();
+
 const LanguageSwitcher = ({ className }: Props) => {
   const { i18n } = useTranslation();
-  const current = LANGUAGES.find((l) => l.code === i18n.language) ?? LANGUAGES[0];
+  const [lng, setLng] = useState(normalize(i18n.resolvedLanguage || i18n.language));
+
+  useEffect(() => {
+    const onChange = (l: string) => setLng(normalize(l));
+    i18n.on("languageChanged", onChange);
+    return () => i18n.off("languageChanged", onChange);
+  }, [i18n]);
+
+  const current = LANGUAGES.find((l) => l.code === lng) ?? LANGUAGES[0];
+
+  const change = async (code: string) => {
+    await i18n.changeLanguage(code);
+    try {
+      localStorage.setItem("i18nextLng", code);
+    } catch {}
+  };
 
   return (
     <div className={className}>
@@ -30,7 +48,7 @@ const LanguageSwitcher = ({ className }: Props) => {
           {LANGUAGES.map((l) => (
             <DropdownMenuItem
               key={l.code}
-              onClick={() => i18n.changeLanguage(l.code)}
+              onClick={() => change(l.code)}
               className={l.code === current.code ? "font-semibold" : ""}
             >
               {l.label}

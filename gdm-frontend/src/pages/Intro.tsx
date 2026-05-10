@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Leaf, Heart, Sparkles } from "lucide-react";
+import LanguageSwitcher from "@/components/study/LanguageSwitcher";
 
 const CuteGiniSVG = () => (
   <svg width="120" height="120" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,18 +42,20 @@ const CuteGiniSVG = () => (
 
 const Intro = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const features = [
-    { icon: <Leaf className="w-5 h-5 text-primary" />, text: "Personalized nutrition guidance" },
-    { icon: <Heart className="w-5 h-5 text-primary" />, text: "Gentle glucose tracking" },
-    { icon: <Sparkles className="w-5 h-5 text-primary" />, text: "Evidence-based education" },
+    { icon: <Leaf className="w-5 h-5 text-primary" />, text: t("intro.feature1") },
+    { icon: <Heart className="w-5 h-5 text-primary" />, text: t("intro.feature2") },
+    { icon: <Sparkles className="w-5 h-5 text-primary" />, text: t("intro.feature3") },
   ];
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-between px-6 py-12"
+      className="min-h-screen flex flex-col items-center justify-between px-6 py-12 relative"
       style={{ background: "linear-gradient(180deg, hsl(60, 20%, 95%) 0%, hsl(340, 40%, 92%) 100%)" }}
     >
+      <LanguageSwitcher className="absolute top-4 right-4 z-10" />
       <div className="w-full max-w-sm flex-1 flex flex-col items-center justify-center">
         {/* Mascot */}
         <div className="animate-gini-float mb-6">
@@ -73,10 +77,10 @@ const Intro = () => {
         {/* Content */}
         <div className="text-center animate-fade-in">
           <h1 className="text-3xl font-display font-bold mb-3 text-foreground">
-            Hello, Mama. 🌿
+            {t("intro.greeting")}
           </h1>
           <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-[280px] mx-auto">
-            I'm Gini, your gentle companion for managing gestational diabetes. Together, we'll make this journey calmer and more manageable.
+            {t("intro.description")}
           </p>
 
           <div className="space-y-3 mb-6">
@@ -92,7 +96,7 @@ const Intro = () => {
           </div>
 
           <p className="text-xs text-muted-foreground mb-6">
-            Educational guidance only — not a substitute for medical care.
+            {t("auth.educationalDisclaimer")}
           </p>
         </div>
       </div>
@@ -103,7 +107,7 @@ const Intro = () => {
           onClick={() => navigate("/auth")}
           className="w-full rounded-2xl h-12 font-semibold shadow-soft"
         >
-          Let's Begin <ChevronRight className="w-4 h-4 ml-1" />
+          {t("intro.begin")} <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
     </div>
