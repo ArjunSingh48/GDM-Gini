@@ -10,7 +10,8 @@
     "back": "Back",
     "yes": "Yes",
     "no": "No",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "assistantNotice": "AI assistant availability may occasionally vary during development testing."
   },
   "consent": {
     "title": "MOMentum: A Digital Women's Health Intervention Targeting Gestational Diabetes Mellitus (GDM)",
@@ -490,5 +491,23 @@
     "welcome": "Hi! I'm here to answer your questions. Ask me anything you'd like — try at least 3 questions before finishing.",
     "errorReply": "I'm having trouble right now. Please try again.",
     "chatError": "Chat error"
+  },
+  "screening": {
+    "eyebrow": "Eligibility check",
+    "title": "A couple of quick questions",
+    "subtitle": "To make sure this study is a good fit for you, please answer the questions below honestly.",
+    "q1": "Are you currently pregnant or have you ever been pregnant?",
+    "q2": "Have you ever been diagnosed with diabetes (type 1 or 2), gestational diabetes mellitus, or told you are at risk of developing gestational diabetes mellitus?",
+    "yes": "Yes",
+    "no": "No",
+    "continue": "Continue",
+    "submitting": "Saving…",
+    "disclaimer": "Your answers help us match the right participants. They are stored securely with your Prolific ID."
+  },
+  "surveyCTA": {
+    "eyebrow": "Study survey",
+    "title": "Please explore the app for about 3–4 minutes before proceeding to the survey.",
+    "body": "After completing the survey, you will receive your Prolific completion confirmation.",
+    "button": "Take Survey"
   }
 }

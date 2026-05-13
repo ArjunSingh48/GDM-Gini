@@ -10,7 +10,8 @@
     "back": "Indietro",
     "yes": "Sì",
     "no": "No",
-    "loading": "Caricamento..."
+    "loading": "Caricamento...",
+    "assistantNotice": "La disponibilità dell'assistente IA potrebbe occasionalmente variare durante i test di sviluppo."
   },
   "consent": {
     "title": "MOMentum: Un intervento digitale di salute femminile per il diabete gestazionale (GDM)",
@@ -490,5 +491,23 @@
     "welcome": "Ciao! Sono qui per rispondere alle tue domande. Chiedimi qualsiasi cosa — prova a fare almeno 3 domande prima di terminare.",
     "errorReply": "Ho problemi in questo momento. Riprova.",
     "chatError": "Errore della chat"
+  },
+  "screening": {
+    "eyebrow": "Controllo di idoneità",
+    "title": "Un paio di domande veloci",
+    "subtitle": "Per assicurarci che questo studio sia adatto a te, rispondi onestamente alle domande seguenti.",
+    "q1": "Sei attualmente incinta o sei mai stata incinta?",
+    "q2": "Ti è mai stato diagnosticato il diabete (tipo 1 o 2), il diabete gestazionale o ti è stato detto che sei a rischio di svilupparlo?",
+    "yes": "Sì",
+    "no": "No",
+    "continue": "Continua",
+    "submitting": "Salvataggio…",
+    "disclaimer": "Le tue risposte ci aiutano a selezionare i partecipanti giusti. Sono memorizzate in modo sicuro con il tuo ID Prolific."
+  },
+  "surveyCTA": {
+    "eyebrow": "Sondaggio dello studio",
+    "title": "Esplora l'app per circa 3–4 minuti prima di passare al sondaggio.",
+    "body": "Dopo aver completato il sondaggio, riceverai la conferma di completamento Prolific.",
+    "button": "Fai il sondaggio"
   }
 }

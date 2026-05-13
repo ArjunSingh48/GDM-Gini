@@ -71,7 +71,17 @@ serve(async (req) => {
       pid, user_id: userId, consent_given: true, consent_at: new Date().toISOString(),
     }, { onConflict: "pid,user_id" });
 
+    // Prolific tracking link
+    const { data: pp } = await admin.from("prolific_participants").select("id").eq("prolific_pid", pid).maybeSingle();
+    if (pp) {
+      await admin.from("prolific_participants").update({ user_id: userId }).eq("prolific_pid", pid);
+    } else {
+      await admin.from("prolific_participants").insert({ prolific_pid: pid, user_id: userId });
+    }
+
     return new Response(JSON.stringify({ ok: true }), {
+      status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

@@ -263,7 +263,9 @@ export type Database = {
           id: string
           metadata: Json
           pid: string
+          session_id: string | null
           session_start: string
+          study_id: string | null
           user_id: string | null
         }
         Insert: {
@@ -273,7 +275,9 @@ export type Database = {
           id?: string
           metadata?: Json
           pid: string
+          session_id?: string | null
           session_start?: string
+          study_id?: string | null
           user_id?: string | null
         }
         Update: {
@@ -283,7 +287,9 @@ export type Database = {
           id?: string
           metadata?: Json
           pid?: string
+          session_id?: string | null
           session_start?: string
+          study_id?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -348,6 +354,66 @@ export type Database = {
           risk_level?: string | null
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      prolific_participants: {
+        Row: {
+          completion_code: string | null
+          consent_at: string | null
+          consented: boolean | null
+          created_at: string
+          id: string
+          metadata: Json
+          prolific_pid: string
+          screening_at: string | null
+          screening_passed: boolean | null
+          screening_q1: string | null
+          screening_q2: string | null
+          session_id: string | null
+          study_id: string | null
+          survey_completed: boolean
+          survey_completed_at: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          completion_code?: string | null
+          consent_at?: string | null
+          consented?: boolean | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          prolific_pid: string
+          screening_at?: string | null
+          screening_passed?: boolean | null
+          screening_q1?: string | null
+          screening_q2?: string | null
+          session_id?: string | null
+          study_id?: string | null
+          survey_completed?: boolean
+          survey_completed_at?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          completion_code?: string | null
+          consent_at?: string | null
+          consented?: boolean | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          prolific_pid?: string
+          screening_at?: string | null
+          screening_passed?: boolean | null
+          screening_q1?: string | null
+          screening_q2?: string | null
+          session_id?: string | null
+          study_id?: string | null
+          survey_completed?: boolean
+          survey_completed_at?: string | null
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }

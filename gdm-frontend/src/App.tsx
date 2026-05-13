@@ -18,6 +18,7 @@ import Intro from "./pages/Intro";
 import NotFound from "./pages/NotFound";
 import StudyEntry from "./pages/study/Entry";
 import StudyConsent from "./pages/study/Consent";
+import StudyScreening from "./pages/study/Screening";
 // StudyAuth removed — uses main /auth flow
 import StudyGuard from "./pages/study/StudyGuard";
 import StudySurvey from "./pages/study/Survey";
@@ -58,6 +59,7 @@ const App = () => (
               <Route path="/intro" element={<Intro />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/consent" element={<StudyConsent />} />
+              <Route path="/screening" element={<StudyScreening />} />
               <Route path="/study" element={<StudyEntry />} />
               <Route path="/study/consent" element={<Navigate to="/consent" replace />} />
               <Route path="/study/auth" element={<Navigate to="/auth" replace />} />

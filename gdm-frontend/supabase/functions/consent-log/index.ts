@@ -12,13 +12,39 @@ serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const pid = typeof body?.pid === "string" ? body.pid.trim().slice(0, 64) : null;
     const consent_given = !!body?.consent_given;
+    const study_id = typeof body?.study_id === "string" ? body.study_id.slice(0, 80) : null;
+    const session_id = typeof body?.session_id === "string" ? body.session_id.slice(0, 80) : null;
     const ua = req.headers.get("user-agent")?.slice(0, 500) || null;
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
+
+    // Audit log (existing)
     await supabase.from("consent_events").insert({ pid, consent_given, user_agent: ua });
+
+    // Track on prolific_participants
+    if (pid) {
+      const now = new Date().toISOString();
+      const { data: existing } = await supabase
+        .from("prolific_participants")
+        .select("id")
+        .eq("prolific_pid", pid)
+        .maybeSingle();
+      if (existing) {
+        await supabase.from("prolific_participants").update({
+          consented: consent_given, consent_at: now,
+          ...(study_id ? { study_id } : {}),
+          ...(session_id ? { session_id } : {}),
+        }).eq("prolific_pid", pid);
+      } else {
+        await supabase.from("prolific_participants").insert({
+          prolific_pid: pid, consented: consent_given, consent_at: now, study_id, session_id,
+        });
+      }
+    }
+
     return new Response(JSON.stringify({ ok: true }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

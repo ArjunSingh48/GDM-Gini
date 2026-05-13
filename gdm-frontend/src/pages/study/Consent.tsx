@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { getStoredPid } from "@/lib/study/pid";
 import { setConsent, PROLIFIC_DECLINE_URL } from "@/lib/study/consent";
+import { getStudyId, getSessionId } from "@/lib/study/prolific";
 import { callFn } from "@/lib/study/network";
 import LanguageSwitcher from "@/components/study/LanguageSwitcher";
 
@@ -16,13 +17,16 @@ const Consent = () => {
   useEffect(() => { if (!pid) navigate("/", { replace: true }); }, [pid, navigate]);
 
   const log = (consent_given: boolean) =>
-    callFn("consent-log", { pid, consent_given }).catch(() => {});
+    callFn("consent-log", {
+      pid, consent_given,
+      study_id: getStudyId(), session_id: getSessionId(),
+    }).catch(() => {});
 
   const accept = async () => {
     setBusy(true);
     await log(true);
     setConsent(true);
-    navigate("/auth", { replace: true });
+    navigate("/screening", { replace: true });
   };
 
   const decline = async () => {

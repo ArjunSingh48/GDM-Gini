@@ -28,7 +28,7 @@ serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const format = body?.format === "xlsx" ? "xlsx" : "csv";
-    const dataset = ["survey", "chat", "participants", "all"].includes(body?.dataset) ? body.dataset : "all";
+    const dataset = ["survey", "chat", "participants", "prolific", "all"].includes(body?.dataset) ? body.dataset : "all";
     const pidFilter = typeof body?.pid === "string" && body.pid.trim() ? body.pid.trim() : null;
 
     const supabase = createClient(
@@ -56,6 +56,13 @@ serve(async (req) => {
     if (dataset === "survey" || dataset === "all") datasets.survey_responses = await fetchRows("survey_responses");
     if (dataset === "chat" || dataset === "all") datasets.chat_logs = await fetchRows("chat_logs");
     if (dataset === "participants" || dataset === "all") datasets.participants = await fetchParticipants();
+    if (dataset === "prolific" || dataset === "all") {
+      let q = supabase.from("prolific_participants").select("*").order("created_at", { ascending: true });
+      if (pidFilter) q = q.eq("prolific_pid", pidFilter);
+      const { data, error } = await q;
+      if (error) throw error;
+      datasets.prolific_participants = data || [];
+    }
 
     if (format === "csv") {
       // single dataset → CSV; multi → concatenated with section headers
