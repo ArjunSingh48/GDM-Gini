@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStoredPid, clearStoredPid } from "@/lib/study/pid";
 import { callFn } from "@/lib/study/network";
+import { PROLIFIC_COMPLETE_URL } from "@/lib/study/consent";
 
 const Done = () => {
   const navigate = useNavigate();
@@ -14,10 +15,11 @@ const Done = () => {
     (async () => {
       try {
         const data = await callFn<{ redirectUrl: string }>("study-complete", { pid });
-        setRedirectUrl(data.redirectUrl);
+        const finalRedirectUrl = data.redirectUrl?.includes("CSI9H44M") ? data.redirectUrl : PROLIFIC_COMPLETE_URL;
+        setRedirectUrl(finalRedirectUrl);
         setTimeout(() => {
           clearStoredPid();
-          window.location.href = data.redirectUrl;
+          window.location.href = finalRedirectUrl;
         }, 4000);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to complete");

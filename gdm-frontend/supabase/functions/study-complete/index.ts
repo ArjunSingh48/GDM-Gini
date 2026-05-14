@@ -9,7 +9,7 @@ const corsHeaders = {
 
 const PID_RE = /^[A-Za-z0-9]{6,40}$/;
 const COMPLETION_CODE = "CSI9H44M";
-const REDIRECT_URL = `https://app.prolific.com/submissions/complete?cc=${COMPLETION_CODE}`;
+const REDIRECT_URL = "https://app.prolific.com/submissions/complete?cc=CSI9H44M";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
