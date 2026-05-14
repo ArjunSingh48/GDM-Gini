@@ -27,7 +27,6 @@ import StudyDone from "./pages/study/Done";
 import AdminExport from "./pages/admin/Export";
 import RagIngest from "./pages/admin/RagIngest";
 import PidInterceptor from "./components/study/PidInterceptor";
-import SurveyFab from "./components/study/SurveyFab";
 
 const queryClient = new QueryClient();
 
@@ -56,7 +55,6 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <PidInterceptor />
-            <SurveyFab />
             <Routes>
               <Route path="/intro" element={<Intro />} />
               <Route path="/auth" element={<Auth />} />
