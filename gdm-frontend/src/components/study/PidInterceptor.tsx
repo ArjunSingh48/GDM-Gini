@@ -28,9 +28,15 @@ const PidInterceptor = () => {
     const sessionIdParam = params.get("SESSION_ID")?.trim() || params.get("session_id")?.trim() || "";
     const stored = getStoredPid();
 
+    // Detect unsubstituted Prolific template placeholders (e.g. "{{%PROLIFIC_PID%}}")
+    const looksLikeTemplate = (v: string) => /[{}%]/.test(v);
+    if (fromUrl && looksLikeTemplate(fromUrl)) {
+      console.warn("[Prolific] URL contains unsubstituted placeholder:", fromUrl);
+    }
+
     if (isValidPid(fromUrl) && !stored) setStoredPid(fromUrl);
-    if (studyIdParam) setStudyId(studyIdParam);
-    if (sessionIdParam) setSessionId(sessionIdParam);
+    if (studyIdParam && !looksLikeTemplate(studyIdParam)) setStudyId(studyIdParam);
+    if (sessionIdParam && !looksLikeTemplate(sessionIdParam)) setSessionId(sessionIdParam);
 
     if (foundKey || studyIdParam || sessionIdParam) {
       ["PROLIFIC_PID", "prolific_pid", "pid", "PID", "STUDY_ID", "study_id", "SESSION_ID", "session_id"]
