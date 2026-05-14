@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ClipboardList } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ClipboardCheck } from "lucide-react";
 import { getStoredPid } from "@/lib/study/pid";
-import { isSurveyDone } from "@/lib/study/surveyState";
 
 /**
  * Floating "Take Survey" button — sits just above the Gini mascot (bottom-20).
@@ -10,9 +10,24 @@ import { isSurveyDone } from "@/lib/study/surveyState";
  */
 const SurveyFab = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
-  const pid = getStoredPid();
-  if (!pid || isSurveyDone()) return null;
+  const [hasPid, setHasPid] = useState(() => Boolean(getStoredPid()));
+
+  useEffect(() => {
+    const syncStudyState = () => {
+      setHasPid(Boolean(getStoredPid()));
+    };
+    syncStudyState();
+    window.addEventListener("study-pid-changed", syncStudyState);
+    window.addEventListener("storage", syncStudyState);
+    return () => {
+      window.removeEventListener("study-pid-changed", syncStudyState);
+      window.removeEventListener("storage", syncStudyState);
+    };
+  }, []);
+
+  if (!hasPid || location.pathname === "/study/survey") return null;
 
   const label = t("surveyCTA.button", { defaultValue: "Take Survey" });
 
@@ -21,10 +36,12 @@ const SurveyFab = () => {
       onClick={() => navigate("/study/survey")}
       aria-label={label}
       title={label}
-      className="fixed bottom-40 right-4 z-50 group flex items-center gap-2 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all pl-3 pr-4 py-3 hover:scale-105 active:scale-95"
+      className="fixed bottom-60 right-4 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-4 ring-background/90 transition-all hover:scale-105 hover:shadow-xl active:scale-95"
     >
-      <ClipboardList className="w-5 h-5" />
-      <span className="text-xs font-semibold whitespace-nowrap">{label}</span>
+      <ClipboardCheck className="w-6 h-6" />
+      <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-card px-1 text-[10px] font-bold text-primary shadow-soft ring-1 ring-border">
+        P
+      </span>
     </button>
   );
 };

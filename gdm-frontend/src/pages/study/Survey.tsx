@@ -93,7 +93,12 @@ const Survey = () => {
           time_spent_ms: timeSpent,
         });
       }
-      try { localStorage.setItem(SURVEY_DONE_KEY, "1"); } catch {}
+      try {
+        localStorage.setItem(SURVEY_DONE_KEY, "1");
+      } catch {
+        // Storage may be unavailable in private browsing contexts.
+      }
+      window.dispatchEvent(new Event("study-survey-state-changed"));
       navigate("/study/done", { replace: true });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Save failed — please try again");

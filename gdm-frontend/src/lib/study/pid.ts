@@ -14,9 +14,19 @@ export const getStoredPid = (): string | null => {
 };
 
 export const setStoredPid = (pid: string) => {
-  try { sessionStorage.setItem(KEY, pid); } catch {}
+  try {
+    sessionStorage.setItem(KEY, pid);
+    window.dispatchEvent(new Event("study-pid-changed"));
+  } catch {
+    // Storage may be unavailable in private browsing contexts.
+  }
 };
 
 export const clearStoredPid = () => {
-  try { sessionStorage.removeItem(KEY); } catch {}
+  try {
+    sessionStorage.removeItem(KEY);
+    window.dispatchEvent(new Event("study-pid-changed"));
+  } catch {
+    // Storage may be unavailable in private browsing contexts.
+  }
 };

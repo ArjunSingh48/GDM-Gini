@@ -4,7 +4,6 @@ import GiniMascot from "@/components/gini/GiniMascot";
 import SurveyReminder from "@/components/study/SurveyReminder";
 import LanguageSwitcher from "@/components/study/LanguageSwitcher";
 import SurveyCTA from "@/components/study/SurveyCTA";
-import SurveyFab from "@/components/study/SurveyFab";
 
 const AppLayout = () => {
   return (
@@ -15,7 +14,6 @@ const AppLayout = () => {
         <Outlet />
       </main>
       <BottomNav />
-      <SurveyFab />
       <GiniMascot />
       <SurveyReminder />
     </div>
