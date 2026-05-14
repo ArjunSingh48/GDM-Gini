@@ -69,6 +69,7 @@ const Survey = () => {
 
   const handleBack = () => {
     if (pageIdx > 0) setPageIdx(pageIdx - 1);
+    else navigate("/home");
   };
 
   const handleSubmit = async () => {
@@ -162,7 +163,7 @@ const Survey = () => {
           <Button
             variant="outline"
             onClick={handleBack}
-            disabled={pageIdx === 0 || submitting}
+            disabled={submitting}
             className="rounded-xl h-11 px-6"
           >
             ← Back
